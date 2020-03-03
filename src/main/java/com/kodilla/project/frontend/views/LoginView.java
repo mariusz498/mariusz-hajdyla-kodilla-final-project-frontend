@@ -10,11 +10,11 @@ import com.vaadin.flow.router.Route;
 @Tag("sa-login-view")
 @Route(value = "login")
 @PageTitle("Login")
-public class LoginPage extends VerticalLayout {
+public class LoginView extends VerticalLayout {
 
     private LoginOverlay login = new LoginOverlay();
 
-    public LoginPage() {
+    public LoginView() {
         login.setAction("login");
         login.setOpened(true);
         login.setTitle("Spring Secured Vaadin");
