@@ -24,6 +24,8 @@ ext {
 }
 
 dependencies {
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.vaadin:vaadin-spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'

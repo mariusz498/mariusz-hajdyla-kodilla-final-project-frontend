@@ -1,12 +1,18 @@
 package com.kodilla.project.frontend.views;
 
+import com.kodilla.project.frontend.client.BackendClient;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Route
 public class MainView extends VerticalLayout {
+
+    @Autowired
+    private BackendClient backendClient;
 
     public MainView() {
         add(buildButtonsLayout());
@@ -18,6 +24,10 @@ public class MainView extends VerticalLayout {
         Button deliverersButton = new Button("For deliverers");
         Button trackingButton = new Button("Order tracking");
         buttonsLayout.add(companiesButton);
+        companiesButton.addClickListener(e -> {
+            UI.getCurrent().navigate(CompanyLoginView.class);
+        });
+        trackingButton.addClickListener(e -> backendClient.getCompanies());
         buttonsLayout.add(deliverersButton);
         buttonsLayout.add(trackingButton);
         return buttonsLayout;
