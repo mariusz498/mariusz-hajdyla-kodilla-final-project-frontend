@@ -7,7 +7,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,7 +32,8 @@ public class MainView extends VerticalLayout {
         trackingButton.addClickListener(e -> {
             List<CompanyDto> companies;
             companies = backendClient.getCompanies();
-            System.out.println(companies.toString());
+            CompanyDto company = companies.get(0);
+            System.out.println(company.getId() + " " + company.getLogin() + " " + company.getPasswordMD5());
         });
         buttonsLayout.add(deliverersButton);
         buttonsLayout.add(trackingButton);

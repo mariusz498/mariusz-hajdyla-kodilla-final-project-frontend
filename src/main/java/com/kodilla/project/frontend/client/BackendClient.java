@@ -19,7 +19,7 @@ public class BackendClient {
     private Template restTemplate;
 
     public List<CompanyDto> getCompanies() {
-        URI url = UriComponentsBuilder.fromPath("localhost:8081/smart_shipping/companies").build().encode().toUri();
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/companies").build().encode().toUri();
 
         try {
             CompanyDto[] response = restTemplate.getForObject(url, CompanyDto[].class);
