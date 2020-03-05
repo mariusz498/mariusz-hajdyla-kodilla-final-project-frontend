@@ -1,6 +1,8 @@
 package com.kodilla.project.frontend.views;
 
 import com.kodilla.project.frontend.client.BackendClient;
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -36,11 +38,16 @@ public class MainView extends VerticalLayout {
         PasswordField passwordField = new PasswordField();
         passwordField.setLabel("Password");
         passwordField.setPlaceholder("Enter password");
-        passwordField.setValue("secret1");
+        passwordField.setValue("password");
         Button loginButton = new Button("Login");
+        Text registerText = new Text("Don't have account? Register now!");
+        Button registerButton = new Button("Register");
+        registerButton.addClickListener(e -> UI.getCurrent().navigate(RegisterCompanyView.class));
         companyLoginLayout.add(loginField);
         companyLoginLayout.add(passwordField);
         companyLoginLayout.add(loginButton);
+        companyLoginLayout.add(registerText);
+        companyLoginLayout.add(registerButton);
         return companyLoginLayout;
     }
 
@@ -52,7 +59,7 @@ public class MainView extends VerticalLayout {
         PasswordField passwordField = new PasswordField();
         passwordField.setLabel("Password");
         passwordField.setPlaceholder("Enter password");
-        passwordField.setValue("secret1");
+        passwordField.setValue("password");
         Button loginButton = new Button("Login");
         driverLoginLayout.add(loginField);
         driverLoginLayout.add(passwordField);
