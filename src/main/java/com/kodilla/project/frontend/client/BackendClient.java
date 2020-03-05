@@ -1,13 +1,15 @@
 package com.kodilla.project.frontend.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodilla.project.frontend.domain.Company;
 import com.kodilla.project.frontend.domain.CompanyDto;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,17 +32,17 @@ public class BackendClient {
         }
     }
 
-    public boolean createCompany(Company company) {
-        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/companies")
-                .queryParam("login", company.getLogin())
-                .queryParam("passwordMD5", company.getPasswordMD5())
-                .queryParam("orders", company.getOrders())
-                .build()
-                .encode()
-                .toUri();
+    public boolean createCompany(Company company) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(company);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, "application/json");
+        HttpEntity httpEntity = new HttpEntity(jsonString, httpHeaders);
+        String url = "http://localhost:8081/smart_shipping/companies";
         try {
-            CompanyDto response = restTemplate.postForObject(url, null, CompanyDto.class);
-            if (response.getLogin().equals(company.getLogin()) && response.getPasswordMD5().equals(company.getPasswordMD5())) {
+            HttpStatus response  = restTemplate.postForObject(url, httpEntity, null);
+            //TODO change response type in front and backend
+            if (response.is2xxSuccessful()) {
                 return true;
             }
         } catch (RestClientException e) {

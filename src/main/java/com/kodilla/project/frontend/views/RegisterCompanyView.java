@@ -1,5 +1,6 @@
 package com.kodilla.project.frontend.views;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kodilla.project.frontend.client.BackendClient;
 import com.kodilla.project.frontend.domain.Company;
 import com.vaadin.flow.component.button.Button;
@@ -33,7 +34,11 @@ public class RegisterCompanyView extends VerticalLayout {
         Button registerButton = new Button("Register");
         registerButton.addClickListener(e -> {
             Company company = new Company(loginField.getValue(), passwordField.getValue(), new ArrayList<>());
-            backendClient.createCompany(company);
+            try {
+                backendClient.createCompany(company);
+            } catch (JsonProcessingException ex) {
+                ex.printStackTrace();
+            }
         });
         registerCompanyLayout.add(loginField);
         registerCompanyLayout.add(passwordField);
