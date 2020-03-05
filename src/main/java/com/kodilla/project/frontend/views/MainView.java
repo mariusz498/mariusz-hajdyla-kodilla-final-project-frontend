@@ -1,13 +1,12 @@
 package com.kodilla.project.frontend.views;
 
 import com.kodilla.project.frontend.client.BackendClient;
-import com.kodilla.project.frontend.domain.CompanyDto;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route
@@ -17,26 +16,58 @@ public class MainView extends VerticalLayout {
     private BackendClient backendClient;
 
     public MainView() {
-        add(buildButtonsLayout());
+        add(buildMainLayout());
     }
 
-    private HorizontalLayout buildButtonsLayout() {
-        HorizontalLayout buttonsLayout = new HorizontalLayout();
-        Button companiesButton = new Button("For Companies");
-        Button deliverersButton = new Button("For deliverers");
-        Button trackingButton = new Button("Order tracking");
-        buttonsLayout.add(companiesButton);
-        companiesButton.addClickListener(e -> {
-            UI.getCurrent().navigate(CompanyLoginView.class);
-        });
-        trackingButton.addClickListener(e -> {
-            List<CompanyDto> companies;
-            companies = backendClient.getCompanies();
-            CompanyDto company = companies.get(0);
-            System.out.println(company.getId() + " " + company.getLogin() + " " + company.getPasswordMD5());
-        });
-        buttonsLayout.add(deliverersButton);
-        buttonsLayout.add(trackingButton);
-        return buttonsLayout;
+    private HorizontalLayout buildMainLayout() {
+        HorizontalLayout mainLayout = new HorizontalLayout();
+        mainLayout.setWidthFull();
+        mainLayout.add(buildCompanyLoginLayout());
+        mainLayout.add(buildDriverLoginLayout());
+        mainLayout.add(buildOrderFinder());
+        return mainLayout;
+    }
+    
+    private VerticalLayout buildCompanyLoginLayout() {
+        VerticalLayout companyLoginLayout = new VerticalLayout();
+        TextField loginField = new TextField();
+        loginField.setLabel("Company login");
+        loginField.setPlaceholder("Login");
+        PasswordField passwordField = new PasswordField();
+        passwordField.setLabel("Password");
+        passwordField.setPlaceholder("Enter password");
+        passwordField.setValue("secret1");
+        Button loginButton = new Button("Login");
+        companyLoginLayout.add(loginField);
+        companyLoginLayout.add(passwordField);
+        companyLoginLayout.add(loginButton);
+        return companyLoginLayout;
+    }
+
+    private VerticalLayout buildDriverLoginLayout() {
+        VerticalLayout driverLoginLayout = new VerticalLayout();
+        TextField loginField = new TextField();
+        loginField.setLabel("Deliverer login");
+        loginField.setPlaceholder("Login");
+        PasswordField passwordField = new PasswordField();
+        passwordField.setLabel("Password");
+        passwordField.setPlaceholder("Enter password");
+        passwordField.setValue("secret1");
+        Button loginButton = new Button("Login");
+        driverLoginLayout.add(loginField);
+        driverLoginLayout.add(passwordField);
+        driverLoginLayout.add(loginButton);
+        return driverLoginLayout;
+    }
+
+    private VerticalLayout buildOrderFinder() {
+        VerticalLayout orderFinder = new VerticalLayout();
+        TextField idField = new TextField();
+        idField.setLabel("Order ID");
+        idField.setPlaceholder("Order ID number");
+        Button findButton = new Button("Find order");
+        orderFinder.add(idField);
+        orderFinder.add(findButton);
+        return orderFinder;
     }
 }
