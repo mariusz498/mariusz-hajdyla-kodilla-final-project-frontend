@@ -1,9 +1,12 @@
 package com.kodilla.project.frontend.encoder;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+@Component
 public class MD5Encoder {
 
     public String encode(String testString) throws NoSuchAlgorithmException {

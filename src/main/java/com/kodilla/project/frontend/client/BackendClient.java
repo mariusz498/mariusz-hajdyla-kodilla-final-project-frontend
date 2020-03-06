@@ -8,6 +8,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
+import com.kodilla.project.frontend.mapper.JsonMapper;
+import elemental.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -22,6 +26,9 @@ public class BackendClient {
     @Autowired
     private Template restTemplate;
 
+    @Autowired
+    private JsonMapper jsonMapper;
+
     public List<CompanyDto> getCompanies() {
         URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/companies").build().encode().toUri();
         try {
@@ -32,22 +39,24 @@ public class BackendClient {
         }
     }
 
+    public CompanyDto getCompanyByLogin(String login) {
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/companies/login=" + login).build().encode().toUri();
+            CompanyDto response = restTemplate.getForObject(url, CompanyDto.class);
+            return ofNullable(response).orElse(new CompanyDto());
+    }
+
     public boolean createCompany(Company company) throws JsonProcessingException {
 
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(company);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(HttpHeaders.CONTENT_TYPE, "application/json");
-        HttpEntity httpEntity = new HttpEntity(jsonString, httpHeaders);
-        String url = "http://localhost:8081/smart_shipping/companies";
-        try {
-            CompanyDto response  = restTemplate.postForObject(url, httpEntity, CompanyDto.class);
-            if (response.getLogin().equals(company.getLogin()) && response.getPasswordMD5().equals(company.getPasswordMD5())) {
-                return true;
+            String url = "http://localhost:8081/smart_shipping/companies";
+            try {
+                HttpEntity httpEntity = jsonMapper.mapToJson(company);
+                CompanyDto response = restTemplate.postForObject(url, httpEntity, CompanyDto.class);
+                if (response.getLogin().equals(company.getLogin()) && response.getPasswordMD5().equals(company.getPasswordMD5())) {
+                    return true;
+                }
+            } catch (RestClientException e) {
+                System.out.println(e);
             }
-        } catch (RestClientException e) {
-            System.out.println(e);
-        }
-        return false;
+            return false;
     }
 }

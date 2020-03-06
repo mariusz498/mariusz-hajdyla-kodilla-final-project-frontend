@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kodilla.project.frontend.client.BackendClient;
 import com.kodilla.project.frontend.domain.Company;
 import com.kodilla.project.frontend.encoder.MD5Encoder;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -38,19 +40,27 @@ public class RegisterCompanyView extends VerticalLayout {
         passwordField.setValue("password");
         Button registerButton = new Button("Register");
         registerButton.addClickListener(e -> {
-            //TODO add check if there is company with chosen name, return message: name is unavailable
-            String passwordMd5 = null;
-            try {
-                passwordMd5 = encoder.encode(passwordField.getValue());
-            } catch (NoSuchAlgorithmException ex) {
-                ex.printStackTrace();
+            if (backendClient.getCompanyByLogin(loginField.getValue()).getLogin() == null) {
+                String passwordMd5 = null;
+                try {
+                    passwordMd5 = encoder.encode(passwordField.getValue());
+                } catch (NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                }
+                Company company = new Company(loginField.getValue(), passwordMd5, new ArrayList<>());
+                boolean status = false;
+                try {
+                    status = backendClient.createCompany(company);
+                } catch (JsonProcessingException ex) {
+                    ex.printStackTrace();
+                }
+                if(status) {
+                    UI.getCurrent().navigate(MainView.class);
+                    Notification.show("Registration successful! Now you can log in");
+                }
             }
-            Company company = new Company(loginField.getValue(), passwordMd5, new ArrayList<>());
-            try {
-                boolean status = backendClient.createCompany(company);
-                System.out.println(status);
-            } catch (JsonProcessingException ex) {
-                ex.printStackTrace();
+            else {
+                Notification.show("Company name is unavailable. Please choose another name");
             }
         });
         registerCompanyLayout.add(loginField);
