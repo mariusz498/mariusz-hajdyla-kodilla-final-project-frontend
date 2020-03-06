@@ -33,7 +33,7 @@ public class BackendClient {
     }
 
     public boolean createCompany(Company company) throws JsonProcessingException {
-        //TODO add check if there is company with chosen name, return message: name is unavailable
+
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(company);
         HttpHeaders httpHeaders = new HttpHeaders();

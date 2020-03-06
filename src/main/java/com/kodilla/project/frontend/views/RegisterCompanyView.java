@@ -38,6 +38,7 @@ public class RegisterCompanyView extends VerticalLayout {
         passwordField.setValue("password");
         Button registerButton = new Button("Register");
         registerButton.addClickListener(e -> {
+            //TODO add check if there is company with chosen name, return message: name is unavailable
             String passwordMd5 = null;
             try {
                 passwordMd5 = encoder.encode(passwordField.getValue());
