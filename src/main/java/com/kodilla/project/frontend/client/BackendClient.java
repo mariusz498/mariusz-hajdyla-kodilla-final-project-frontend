@@ -33,6 +33,7 @@ public class BackendClient {
     }
 
     public boolean createCompany(Company company) throws JsonProcessingException {
+        //TODO add check if there is company with chosen name, return message: name is unavailable
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(company);
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -40,9 +41,8 @@ public class BackendClient {
         HttpEntity httpEntity = new HttpEntity(jsonString, httpHeaders);
         String url = "http://localhost:8081/smart_shipping/companies";
         try {
-            HttpStatus response  = restTemplate.postForObject(url, httpEntity, null);
-            //TODO change response type in front and backend
-            if (response.is2xxSuccessful()) {
+            CompanyDto response  = restTemplate.postForObject(url, httpEntity, CompanyDto.class);
+            if (response.getLogin().equals(company.getLogin()) && response.getPasswordMD5().equals(company.getPasswordMD5())) {
                 return true;
             }
         } catch (RestClientException e) {
