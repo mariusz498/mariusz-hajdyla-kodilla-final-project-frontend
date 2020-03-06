@@ -1,6 +1,5 @@
 package com.kodilla.project.frontend.views;
 
-import com.kodilla.project.frontend.client.BackendClient;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -9,13 +8,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Route
 public class MainView extends VerticalLayout {
-
-    @Autowired
-    private BackendClient backendClient;
 
     public MainView() {
         add(buildMainLayout());

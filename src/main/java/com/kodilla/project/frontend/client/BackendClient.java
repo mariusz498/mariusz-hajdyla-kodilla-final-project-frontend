@@ -1,17 +1,15 @@
 package com.kodilla.project.frontend.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodilla.project.frontend.domain.Company;
 import com.kodilla.project.frontend.domain.CompanyDto;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+
 
 import com.kodilla.project.frontend.mapper.JsonMapper;
-import elemental.json.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
