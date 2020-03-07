@@ -6,9 +6,9 @@ import com.vaadin.flow.router.Route;
 
 @Route(value = "company/main")
 @PageTitle("CompanyView")
-public class CompanyLoggedView extends VerticalLayout {
+public class DriverLoggedView extends VerticalLayout {
 
-    public CompanyLoggedView() {
+    public DriverLoggedView() {
 
     }
 }

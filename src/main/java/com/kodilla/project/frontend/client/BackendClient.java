@@ -3,12 +3,12 @@ package com.kodilla.project.frontend.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kodilla.project.frontend.domain.Company;
 import com.kodilla.project.frontend.domain.CompanyDto;
+import com.kodilla.project.frontend.domain.Driver;
+import com.kodilla.project.frontend.domain.DriverDto;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-
 import com.kodilla.project.frontend.mapper.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -43,6 +43,13 @@ public class BackendClient {
             return ofNullable(response).orElse(new CompanyDto());
     }
 
+    public DriverDto getDriverByLogin(String login) {
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/drivers/login=" + login).build().encode().toUri();
+        DriverDto response = restTemplate.getForObject(url, DriverDto.class);
+        return ofNullable(response).orElse(new DriverDto());
+    }
+    //TODO make backend endpont for this
+
     public boolean createCompany(Company company) throws JsonProcessingException {
 
             String url = "http://localhost:8081/smart_shipping/companies";
@@ -56,5 +63,21 @@ public class BackendClient {
                 System.out.println(e);
             }
             return false;
+    }
+
+    public boolean createDriver(Driver driver) throws JsonProcessingException {
+
+        //TODO: check endpoint name
+        String url = "http://localhost:8081/smart_shipping/drivers";
+        try {
+            HttpEntity httpEntity = jsonMapper.mapToJson(driver);
+            DriverDto response = restTemplate.postForObject(url, httpEntity, DriverDto.class);
+            if (response.getLogin().equals(driver.getLogin()) && response.getPasswordMD5().equals(driver.getPasswordMD5())) {
+                return true;
+            }
+        } catch (RestClientException e) {
+            System.out.println(e);
+        }
+        return false;
     }
 }

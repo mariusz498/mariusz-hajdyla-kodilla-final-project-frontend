@@ -16,6 +16,17 @@ public class Authenticator {
     @Autowired
     private BackendClient backendClient;
 
+    public boolean authenticateDriver(String login, String password) throws NoSuchAlgorithmException {
+        String driverLogin = backendClient.getDriverByLogin(login).getLogin();
+        String driverPasswordMD5 = backendClient.getCompanyByLogin(login).getPasswordMD5();
+        String encodedPassword = encoder.encode(password);
+        if(login.equals(driverLogin) && encodedPassword.equals(driverPasswordMD5)) {
+            return true;
+        }
+        Notification.show("Invalid login or password! Please try again.");
+        return false;
+    }
+
     public boolean authenticateCompany(String login, String password) throws NoSuchAlgorithmException {
         String companyLogin = backendClient.getCompanyByLogin(login).getLogin();
         String companyPasswordMD5 = backendClient.getCompanyByLogin(login).getPasswordMD5();

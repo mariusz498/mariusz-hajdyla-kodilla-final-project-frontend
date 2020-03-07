@@ -79,9 +79,30 @@ public class MainView extends VerticalLayout {
         passwordField.setPlaceholder("Enter password");
         passwordField.setValue("password");
         Button loginButton = new Button("Login");
+        loginButton.addClickListener(e -> {
+            boolean authenticatorResponse = false;
+            if(loginField.getValue().isEmpty() || passwordField.getValue().isEmpty()) {
+                Notification.show("Error: empty login or password field!");
+            }
+            else {
+                try {
+                    authenticatorResponse = authenticator.authenticateDriver(loginField.getValue(), passwordField.getValue());
+                } catch (NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if(authenticatorResponse) {
+                UI.getCurrent().navigate(DriverLoggedView.class);
+            }
+        });
+        Text registerText = new Text("Don't have account yet? Register now!");
+        Button registerButton = new Button("Register");
+        registerButton.addClickListener(e -> UI.getCurrent().navigate(RegisterDriverView.class));
         driverLoginLayout.add(loginField);
         driverLoginLayout.add(passwordField);
         driverLoginLayout.add(loginButton);
+        driverLoginLayout.add(registerText);
+        driverLoginLayout.add(registerButton);
         return driverLoginLayout;
     }
 
