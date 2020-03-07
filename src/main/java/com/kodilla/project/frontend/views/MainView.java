@@ -58,7 +58,7 @@ public class MainView extends VerticalLayout {
                 UI.getCurrent().navigate(CompanyLoggedView.class);
             }
         });
-        Text registerText = new Text("Don't have account? Register now!");
+        Text registerText = new Text("Don't have account yet? Register now!");
         Button registerButton = new Button("Register");
         registerButton.addClickListener(e -> UI.getCurrent().navigate(RegisterCompanyView.class));
         companyLoginLayout.add(loginField);

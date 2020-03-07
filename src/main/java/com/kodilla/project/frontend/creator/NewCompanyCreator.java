@@ -38,11 +38,11 @@ public class NewCompanyCreator {
             }
             if(status) {
                 UI.getCurrent().navigate(MainView.class);
-                Notification.show("Registration successful! Now you can log in");
+                Notification.show("Registration successful! Now you can log in.");
             }
         }
         else {
-            Notification.show("Company name is unavailable. Please choose another name");
+            Notification.show("Company name is unavailable. Please choose another name.");
         }
     }
 }

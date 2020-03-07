@@ -23,7 +23,7 @@ public class Authenticator {
         if(login.equals(companyLogin) && encodedPassword.equals(companyPasswordMD5)) {
             return true;
         }
-        Notification.show("Invalid login or password!");
+        Notification.show("Invalid login or password! Please try again.");
         return false;
     }
 }
