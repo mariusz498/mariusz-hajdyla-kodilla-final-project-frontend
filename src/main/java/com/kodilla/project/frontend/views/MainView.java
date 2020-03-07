@@ -1,16 +1,23 @@
 package com.kodilla.project.frontend.views;
 
+import com.kodilla.project.frontend.client.Authenticator;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import java.security.NoSuchAlgorithmException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Route
 public class MainView extends VerticalLayout {
+
+    @Autowired
+    private Authenticator authenticator;
 
     public MainView() {
         add(buildMainLayout());
@@ -35,6 +42,22 @@ public class MainView extends VerticalLayout {
         passwordField.setPlaceholder("Enter password");
         passwordField.setValue("password");
         Button loginButton = new Button("Login");
+        loginButton.addClickListener(e -> {
+            boolean authenticatorResponse = false;
+            if(loginField.getValue().isEmpty() || passwordField.getValue().isEmpty()) {
+                Notification.show("Error: empty login or password field!");
+            }
+            else {
+                try {
+                    authenticatorResponse = authenticator.authenticateCompany(loginField.getValue(), passwordField.getValue());
+                } catch (NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if(authenticatorResponse) {
+                UI.getCurrent().navigate(CompanyLoggedView.class);
+            }
+        });
         Text registerText = new Text("Don't have account? Register now!");
         Button registerButton = new Button("Register");
         registerButton.addClickListener(e -> UI.getCurrent().navigate(RegisterCompanyView.class));
