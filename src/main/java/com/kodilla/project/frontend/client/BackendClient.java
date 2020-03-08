@@ -43,13 +43,6 @@ public class BackendClient {
             return ofNullable(response).orElse(new CompanyDto());
     }
 
-    public DriverDto getDriverByLogin(String login) {
-        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/drivers/login=" + login).build().encode().toUri();
-        DriverDto response = restTemplate.getForObject(url, DriverDto.class);
-        return ofNullable(response).orElse(new DriverDto());
-    }
-    //TODO make backend endpont for this
-
     public boolean createCompany(Company company) throws JsonProcessingException {
 
             String url = "http://localhost:8081/smart_shipping/companies";
@@ -65,9 +58,14 @@ public class BackendClient {
             return false;
     }
 
+    public DriverDto getDriverByLogin(String login) {
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/drivers/login=" + login).build().encode().toUri();
+        DriverDto response = restTemplate.getForObject(url, DriverDto.class);
+        return ofNullable(response).orElse(new DriverDto());
+    }
+
     public boolean createDriver(Driver driver) throws JsonProcessingException {
 
-        //TODO: check endpoint name
         String url = "http://localhost:8081/smart_shipping/drivers";
         try {
             HttpEntity httpEntity = jsonMapper.mapToJson(driver);
