@@ -20,14 +20,15 @@ repositories {
 }
 
 ext {
-    set('vaadinVersion', "14.1.17")
+    set('vaadinVersion', "14.1.19")
 }
 
 dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'com.vaadin:vaadin-spring-boot-starter'
+  //  implementation 'com.vaadin:vaadin-spring-boot-starter'
+    implementation 'com.vaadin:vaadin'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
