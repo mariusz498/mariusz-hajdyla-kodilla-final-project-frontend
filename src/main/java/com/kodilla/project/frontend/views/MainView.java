@@ -55,7 +55,7 @@ public class MainView extends VerticalLayout {
                 }
             }
             if(authenticatorResponse) {
-                UI.getCurrent().navigate(CompanyLoggedView.class);
+                UI.getCurrent().navigate(CompanyLoggedView.class, (loginField.getValue()));
             }
         });
         Text registerText = new Text("Don't have account yet? Register now!");
