@@ -1,5 +1,6 @@
 package com.kodilla.project.frontend.domain;
 
+import com.vaadin.flow.spring.annotation.UIScope;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
+@UIScope
 public class Company {
         private String login;
         private String passwordMD5;

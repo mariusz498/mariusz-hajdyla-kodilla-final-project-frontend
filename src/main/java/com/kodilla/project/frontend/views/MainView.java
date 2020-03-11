@@ -1,6 +1,9 @@
 package com.kodilla.project.frontend.views;
 
 import com.kodilla.project.frontend.client.Authenticator;
+import com.kodilla.project.frontend.client.BackendClient;
+import com.kodilla.project.frontend.domain.Company;
+import com.kodilla.project.frontend.mapper.CompanyMapper;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -18,6 +21,15 @@ public class MainView extends VerticalLayout {
 
     @Autowired
     private Authenticator authenticator;
+
+    @Autowired
+    public Company company;
+
+    @Autowired
+    private CompanyMapper companyMapper;
+
+    @Autowired
+    private BackendClient backendClient;
 
     public MainView() {
         add(buildMainLayout());
@@ -55,7 +67,8 @@ public class MainView extends VerticalLayout {
                 }
             }
             if(authenticatorResponse) {
-                UI.getCurrent().navigate(CompanyLoggedView.class, (loginField.getValue()));
+                company = companyMapper.mapToCompany(backendClient.getCompanyByLogin(loginField.getValue()));
+                UI.getCurrent().navigate(CompanyLoggedView.class);
             }
         });
         Text registerText = new Text("Don't have account yet? Register now!");
