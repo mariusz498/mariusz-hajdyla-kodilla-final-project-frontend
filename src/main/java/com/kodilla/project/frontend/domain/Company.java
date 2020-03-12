@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 @UIScope
 public class Company {
+        private Long id;
         private String login;
         private String passwordMD5;
         private List<Order> orders;

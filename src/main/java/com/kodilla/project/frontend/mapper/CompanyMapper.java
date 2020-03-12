@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class CompanyMapper {
     public Company mapToCompany(final CompanyDto companyDto) {
         return new Company(
+                companyDto.getId(),
                 companyDto.getLogin(),
                 companyDto.getPasswordMD5(),
                 companyDto.getOrders());

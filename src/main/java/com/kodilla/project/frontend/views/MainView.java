@@ -3,7 +3,9 @@ package com.kodilla.project.frontend.views;
 import com.kodilla.project.frontend.client.Authenticator;
 import com.kodilla.project.frontend.client.BackendClient;
 import com.kodilla.project.frontend.domain.Company;
+import com.kodilla.project.frontend.domain.Driver;
 import com.kodilla.project.frontend.mapper.CompanyMapper;
+import com.kodilla.project.frontend.mapper.DriverMapper;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -25,10 +27,16 @@ public class MainView extends VerticalLayout {
     private Authenticator authenticator;
 
     @Autowired
-    public Company company;
+    private Company company;
+
+    @Autowired
+    private Driver driver;
 
     @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private DriverMapper driverMapper;
 
     @Autowired
     private BackendClient backendClient;
@@ -70,7 +78,7 @@ public class MainView extends VerticalLayout {
             }
             if(authenticatorResponse) {
                 company = companyMapper.mapToCompany(backendClient.getCompanyByLogin(loginField.getValue()));
-                VaadinSession.getCurrent().setAttribute(Company.class,company) ;
+                VaadinSession.getCurrent().setAttribute(Company.class, company);
                 UI.getCurrent().navigate(CompanyLoggedView.class);
             }
         });
@@ -108,6 +116,8 @@ public class MainView extends VerticalLayout {
                 }
             }
             if(authenticatorResponse) {
+                driver = driverMapper.mapToDriver(backendClient.getDriverByLogin(loginField.getValue()));
+                VaadinSession.getCurrent().setAttribute(Driver.class, driver);
                 UI.getCurrent().navigate(DriverLoggedView.class);
             }
         });

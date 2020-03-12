@@ -12,10 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Driver {
-    @JsonProperty("login")
+    private Long id;
     private String login;
-    @JsonProperty("passwordMD5")
     private String passwordMD5;
-    @JsonProperty("orders")
     private List<Order> orders;
 }

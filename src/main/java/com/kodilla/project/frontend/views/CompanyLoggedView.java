@@ -21,12 +21,7 @@ public class CompanyLoggedView extends VerticalLayout {
     @Autowired
     private BackendClient backendClient;
 
-    @Autowired
-    private CompanyMapper companyMapper;
-
     public CompanyLoggedView() {
         company = VaadinSession.getCurrent().getAttribute(Company.class);
-        Text companyName = new Text(company.getLogin());
-        add(companyName);
     }
 }
