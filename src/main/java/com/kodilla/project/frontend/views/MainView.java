@@ -14,6 +14,8 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import java.security.NoSuchAlgorithmException;
+
+import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route
@@ -68,6 +70,7 @@ public class MainView extends VerticalLayout {
             }
             if(authenticatorResponse) {
                 company = companyMapper.mapToCompany(backendClient.getCompanyByLogin(loginField.getValue()));
+                VaadinSession.getCurrent().setAttribute(Company.class,company) ;
                 UI.getCurrent().navigate(CompanyLoggedView.class);
             }
         });
