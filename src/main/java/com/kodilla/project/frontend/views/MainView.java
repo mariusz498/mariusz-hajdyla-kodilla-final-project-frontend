@@ -48,12 +48,18 @@ public class MainView extends VerticalLayout {
     private HorizontalLayout buildMainLayout() {
         HorizontalLayout mainLayout = new HorizontalLayout();
         mainLayout.setWidthFull();
+        mainLayout.add(headerText());
         mainLayout.add(buildCompanyLoginLayout());
         mainLayout.add(buildDriverLoginLayout());
         mainLayout.add(buildOrderFinder());
         return mainLayout;
     }
-    
+
+    private Text headerText(){
+        Text header = new Text("Welcome to SmartShipping, a platform to automatic land transport management!");
+        return header;
+    }
+
     private VerticalLayout buildCompanyLoginLayout() {
         VerticalLayout companyLoginLayout = new VerticalLayout();
         TextField loginField = new TextField();
