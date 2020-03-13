@@ -62,6 +62,7 @@ public class CompanyLoggedView extends VerticalLayout {
         grid.setColumns("id", "description", "origin", "destination", "status");
         grid.setSizeFull();
         grid.setItems(orders);
+        grid.setDetailsVisibleOnClick(true);
         return grid;
     }
 }
