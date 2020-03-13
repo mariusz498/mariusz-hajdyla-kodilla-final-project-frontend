@@ -4,7 +4,6 @@ import com.kodilla.project.frontend.client.BackendClient;
 
 import com.kodilla.project.frontend.domain.Company;
 import com.kodilla.project.frontend.domain.Order;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -16,7 +15,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Route(value = "company/main")
