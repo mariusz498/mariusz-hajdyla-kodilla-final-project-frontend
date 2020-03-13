@@ -8,8 +8,14 @@ import com.kodilla.project.frontend.domain.DriverDto;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import com.kodilla.project.frontend.domain.Order;
+import com.kodilla.project.frontend.domain.OrderDto;
 import com.kodilla.project.frontend.mapper.JsonMapper;
+import com.kodilla.project.frontend.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -26,6 +32,9 @@ public class BackendClient {
 
     @Autowired
     private JsonMapper jsonMapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
 
     public List<CompanyDto> getCompanies() {
         URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/companies").build().encode().toUri();
@@ -77,5 +86,15 @@ public class BackendClient {
             System.out.println(e);
         }
         return false;
+    }
+
+    public Set<Order> getOrdersByCompany(String login) {
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/orders/companyLogin=" + login).build().encode().toUri();
+        OrderDto[] response = restTemplate.getForObject(url, OrderDto[].class);
+        Set<Order> ordersSet = new HashSet<>();
+        if(response.length != 0) {
+            Arrays.stream(response).forEach(o -> ordersSet.add(orderMapper.mapToOrder(o)));
+        }
+        return ordersSet;
     }
 }

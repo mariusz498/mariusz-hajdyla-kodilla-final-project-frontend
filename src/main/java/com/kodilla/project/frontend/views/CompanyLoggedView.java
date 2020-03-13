@@ -29,10 +29,11 @@ public class CompanyLoggedView extends VerticalLayout {
     @Autowired
     private BackendClient backendClient;
 
-    private Set<Order> orders = new HashSet<>();
+    private Set<Order> orders;
 
     public CompanyLoggedView() {
         company = VaadinSession.getCurrent().getAttribute(Company.class);
+        orders = backendClient.getOrdersByCompany(company.getLogin());
         add(headerLayout());
         if(orders.size() != 0) {
             add(new Text("Your orders: "));
@@ -60,6 +61,7 @@ public class CompanyLoggedView extends VerticalLayout {
         Grid<Order> grid = new Grid<>(Order.class);
         grid.setColumns("id", "description", "origin", "destination", "status");
         grid.setSizeFull();
+        grid.setItems(orders);
         return grid;
     }
 }
