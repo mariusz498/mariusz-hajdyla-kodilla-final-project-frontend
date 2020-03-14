@@ -1,11 +1,14 @@
 package com.kodilla.project.frontend.views;
 
+import com.helger.commons.collection.map.MapEntry;
 import com.kodilla.project.frontend.client.BackendClient;
+import com.kodilla.project.frontend.countries.CountriesWithCodes;
 import com.kodilla.project.frontend.domain.Company;
 import com.kodilla.project.frontend.domain.Order;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -14,6 +17,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Route(value = "company/main")
@@ -25,6 +32,9 @@ public class CompanyLoggedView extends VerticalLayout {
 
     @Autowired
     private BackendClient backendClient;
+
+    @Autowired
+    private CountriesWithCodes countriesWithCodes;
 
     private Set<Order> orders;
 
@@ -66,10 +76,24 @@ public class CompanyLoggedView extends VerticalLayout {
     private HorizontalLayout createOrderLayout() {
         HorizontalLayout layout = new HorizontalLayout();
         layout.setVisible(false);
-        TextField originField = new TextField();
-        originField.setLabel("Origin address");
-        TextField destinationField = new TextField();
-        destinationField.setLabel("Destination address");
+
+        return layout;
+    }
+
+    private VerticalLayout locationLayout(String locationType) {
+        VerticalLayout layout = new VerticalLayout();
+        Map<String, String> countriesCodes = countriesWithCodes.getCountriesWithCodes();
+        Set<String> countriesNames = new HashSet<>();
+        for(Map.Entry<String, String> entry : countriesCodes.entrySet()) {
+            countriesNames.add(entry.getValue());
+        }
+        ComboBox<String> countriesCombo = new ComboBox<>();
+        countriesCombo.setLabel(locationType + " country");
+        countriesCombo.setItems(countriesNames);
+        TextField cityField = new TextField();
+        cityField.setLabel(locationType + " city");
+        TextField locationField = new TextField();
+        locationField.setLabel(locationType + " address");
         return layout;
     }
 
