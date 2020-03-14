@@ -29,7 +29,7 @@ public class NewDriverCreator {
             } catch (NoSuchAlgorithmException ex) {
                 ex.printStackTrace();
             }
-            Driver driver = new Driver(login, passwordMd5, new ArrayList<>());
+            Driver driver = new Driver(null, login, passwordMd5, new ArrayList<>());
             boolean status = false;
             try {
                 status = backendClient.createDriver(driver);

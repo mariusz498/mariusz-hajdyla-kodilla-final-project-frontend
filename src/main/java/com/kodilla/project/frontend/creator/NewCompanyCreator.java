@@ -3,6 +3,7 @@ package com.kodilla.project.frontend.creator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kodilla.project.frontend.client.BackendClient;
 import com.kodilla.project.frontend.domain.Company;
+import com.kodilla.project.frontend.domain.Order;
 import com.kodilla.project.frontend.encoder.MD5Encoder;
 import com.kodilla.project.frontend.views.MainView;
 import com.vaadin.flow.component.UI;
@@ -29,7 +30,7 @@ public class NewCompanyCreator {
             } catch (NoSuchAlgorithmException ex) {
                 ex.printStackTrace();
             }
-            Company company = new Company(login, passwordMd5, new ArrayList<>());
+            Company company = new Company(null, login, passwordMd5, new ArrayList<>());
             boolean status = false;
             try {
                 status = backendClient.createCompany(company);

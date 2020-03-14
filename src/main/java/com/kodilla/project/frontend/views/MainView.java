@@ -4,8 +4,11 @@ import com.kodilla.project.frontend.client.Authenticator;
 import com.kodilla.project.frontend.client.BackendClient;
 import com.kodilla.project.frontend.domain.Company;
 import com.kodilla.project.frontend.domain.Driver;
+import com.kodilla.project.frontend.domain.Order;
+import com.kodilla.project.frontend.domain.OrdersList;
 import com.kodilla.project.frontend.mapper.CompanyMapper;
 import com.kodilla.project.frontend.mapper.DriverMapper;
+import com.kodilla.project.frontend.mapper.OrderMapper;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -16,7 +19,6 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import java.security.NoSuchAlgorithmException;
-
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,22 +35,32 @@ public class MainView extends VerticalLayout {
     private Driver driver;
 
     @Autowired
+    private Order order;
+
+    @Autowired
+    private OrdersList ordersList;
+
+    @Autowired
     private CompanyMapper companyMapper;
 
     @Autowired
     private DriverMapper driverMapper;
 
     @Autowired
+    private OrderMapper orderMapper;
+
+    @Autowired
     private BackendClient backendClient;
 
+
     public MainView() {
+        add(headerText());
         add(buildMainLayout());
     }
 
     private HorizontalLayout buildMainLayout() {
         HorizontalLayout mainLayout = new HorizontalLayout();
         mainLayout.setWidthFull();
-        mainLayout.add(headerText());
         mainLayout.add(buildCompanyLoginLayout());
         mainLayout.add(buildDriverLoginLayout());
         mainLayout.add(buildOrderFinder());
@@ -84,6 +96,8 @@ public class MainView extends VerticalLayout {
             }
             if(authenticatorResponse) {
                 company = companyMapper.mapToCompany(backendClient.getCompanyByLogin(loginField.getValue()));
+                ordersList.setOrdersList(orderMapper.mapToOrdersList(backendClient.getOrdersByCompany(company.getLogin())));
+                VaadinSession.getCurrent().setAttribute(OrdersList.class, ordersList);
                 VaadinSession.getCurrent().setAttribute(Company.class, company);
                 UI.getCurrent().navigate(CompanyLoggedView.class);
             }

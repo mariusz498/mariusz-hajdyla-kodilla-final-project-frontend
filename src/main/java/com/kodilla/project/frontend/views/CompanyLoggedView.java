@@ -1,10 +1,12 @@
 package com.kodilla.project.frontend.views;
 
-import com.helger.commons.collection.map.MapEntry;
 import com.kodilla.project.frontend.client.BackendClient;
 import com.kodilla.project.frontend.countries.CountriesWithCodes;
 import com.kodilla.project.frontend.domain.Company;
+import com.kodilla.project.frontend.domain.Location;
 import com.kodilla.project.frontend.domain.Order;
+import com.kodilla.project.frontend.domain.OrdersList;
+import com.kodilla.project.frontend.mapper.OrderMapper;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -18,13 +20,15 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @Route(value = "company/main")
-@PageTitle("CompanyView")
 public class CompanyLoggedView extends VerticalLayout {
 
     @Autowired
@@ -36,19 +40,21 @@ public class CompanyLoggedView extends VerticalLayout {
     @Autowired
     private CountriesWithCodes countriesWithCodes;
 
-    private Set<Order> orders;
+    @Autowired
+    private OrderMapper orderMapper;
+
+    @Autowired
+    private OrdersList ordersList;
+
 
     public CompanyLoggedView() {
         company = VaadinSession.getCurrent().getAttribute(Company.class);
-        orders = backendClient.getOrdersByCompany(company.getLogin());
+        ordersList = VaadinSession.getCurrent().getAttribute(OrdersList.class);
         add(headerLayout());
-        if(orders.size() != 0) {
-            add(new Text("Your orders: "));
-            add(ordersGrid());
-        }
-        else {
-            add(new Text("You have no orders yet"));
-        }
+        add(buttonsLayout());
+        add(createOrderLayout());
+        add(ordersGrid());
+
     }
 
     private HorizontalLayout headerLayout() {
@@ -67,22 +73,25 @@ public class CompanyLoggedView extends VerticalLayout {
     private HorizontalLayout buttonsLayout() {
         HorizontalLayout layout = new HorizontalLayout();
         Button createOrderButton = new Button("New order");
-
+        //TODO: add listeners
         Button editOrderButton = new Button("Edit order");
-
+        //TODO: add listeners
         return layout;
     }
 
     private HorizontalLayout createOrderLayout() {
         HorizontalLayout layout = new HorizontalLayout();
         layout.setVisible(false);
-
+        layout.add(locationLayout("Origin"));
+        layout.add(locationLayout("Destination"));
         return layout;
     }
 
     private VerticalLayout locationLayout(String locationType) {
         VerticalLayout layout = new VerticalLayout();
-        Map<String, String> countriesCodes = countriesWithCodes.getCountriesWithCodes();
+        Map<String, String> countriesCodes = new HashMap<>();
+        CountriesWithCodes countries = new CountriesWithCodes(countriesCodes);
+
         Set<String> countriesNames = new HashSet<>();
         for(Map.Entry<String, String> entry : countriesCodes.entrySet()) {
             countriesNames.add(entry.getValue());
@@ -94,15 +103,26 @@ public class CompanyLoggedView extends VerticalLayout {
         cityField.setLabel(locationType + " city");
         TextField locationField = new TextField();
         locationField.setLabel(locationType + " address");
+        layout.add(countriesCombo);
+        layout.add(cityField);
+        layout.add(locationField);
         return layout;
     }
 
     private Grid<Order> ordersGrid() {
         Grid<Order> grid = new Grid<>(Order.class);
-        grid.setColumns("id", "description", "origin", "destination", "status");
+        grid.setColumns("id", "description", "origin", "destination", "value", "currency", "status");
         grid.setSizeFull();
-        grid.setItems(orders);
         grid.setDetailsVisibleOnClick(true);
+        grid.setHeight("500");
+        if(ordersList.getOrdersList().isEmpty()) {
+            add(new Text("You have no orders yet."));
+            grid.setVisible(false);
+        }
+        else {
+            add(new Text("Your orders: "));
+            grid.setItems(ordersList.getOrdersList());
+        }
         return grid;
     }
 }

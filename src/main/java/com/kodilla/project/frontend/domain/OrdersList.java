@@ -1,21 +1,19 @@
 package com.kodilla.project.frontend.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-@Getter
-@Setter
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class Driver {
-    private Long id;
-    private String login;
-    private String passwordMD5;
-    private List<Order> orders;
+@Getter
+@Setter
+public class OrdersList {
+    private List<Order> ordersList = new ArrayList<>();
 }

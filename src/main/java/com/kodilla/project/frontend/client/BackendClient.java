@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import com.kodilla.project.frontend.domain.Order;
 import com.kodilla.project.frontend.domain.OrderDto;
 import com.kodilla.project.frontend.mapper.JsonMapper;
@@ -88,13 +87,13 @@ public class BackendClient {
         return false;
     }
 
-    public Set<Order> getOrdersByCompany(String login) {
+    public List<OrderDto> getOrdersByCompany(String login) {
         URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/orders/companyLogin=" + login).build().encode().toUri();
-        OrderDto[] response = restTemplate.getForObject(url, OrderDto[].class);
-        Set<Order> ordersSet = new HashSet<>();
-        if(response.length != 0) {
-            Arrays.stream(response).forEach(o -> ordersSet.add(orderMapper.mapToOrder(o)));
+        try {
+            OrderDto[] response = restTemplate.getForObject(url, OrderDto[].class);
+            return Arrays.asList(ofNullable(response).orElse(new OrderDto[0]));
+        } catch (RestClientException e) {
+            return new ArrayList<>();
         }
-        return ordersSet;
     }
 }
