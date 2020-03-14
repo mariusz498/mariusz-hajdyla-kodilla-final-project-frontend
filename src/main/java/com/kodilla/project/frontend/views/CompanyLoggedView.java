@@ -1,7 +1,6 @@
 package com.kodilla.project.frontend.views;
 
 import com.kodilla.project.frontend.client.BackendClient;
-
 import com.kodilla.project.frontend.domain.Company;
 import com.kodilla.project.frontend.domain.Order;
 import com.vaadin.flow.component.Text;
@@ -10,11 +9,11 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Set;
 
 @Route(value = "company/main")
@@ -52,6 +51,25 @@ public class CompanyLoggedView extends VerticalLayout {
         });
         layout.add(welcomeText);
         layout.add(logoutButton);
+        return layout;
+    }
+
+    private HorizontalLayout buttonsLayout() {
+        HorizontalLayout layout = new HorizontalLayout();
+        Button createOrderButton = new Button("New order");
+
+        Button editOrderButton = new Button("Edit order");
+
+        return layout;
+    }
+
+    private HorizontalLayout createOrderLayout() {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setVisible(false);
+        TextField originField = new TextField();
+        originField.setLabel("Origin address");
+        TextField destinationField = new TextField();
+        destinationField.setLabel("Destination address");
         return layout;
     }
 
