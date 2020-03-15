@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Location {
     private Long id;
-    private String name;
+    private String label;
     private Double lattitude;
     private Double longitude;
     private List<Order> ordersFrom;

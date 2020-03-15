@@ -1,18 +1,13 @@
 package com.kodilla.project.frontend.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.kodilla.project.frontend.domain.Company;
-import com.kodilla.project.frontend.domain.CompanyDto;
-import com.kodilla.project.frontend.domain.Driver;
-import com.kodilla.project.frontend.domain.DriverDto;
+import com.kodilla.project.frontend.domain.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import com.kodilla.project.frontend.domain.Order;
-import com.kodilla.project.frontend.domain.OrderDto;
 import com.kodilla.project.frontend.mapper.JsonMapper;
 import com.kodilla.project.frontend.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,5 +90,20 @@ public class BackendClient {
         } catch (RestClientException e) {
             return new ArrayList<>();
         }
+    }
+
+    public LocationDto fetchLocation(String countryCode, String city, String query) {
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/location")
+                .queryParam("countryCode", countryCode)
+                .queryParam("city", city)
+                .queryParam("query", query)
+                .build().encode().toUri();
+        try {
+            LocationDto response = restTemplate.getForObject(url, LocationDto.class);
+            return (ofNullable(response).orElse(new LocationDto()));
+        }
+        catch (RestClientException e) {
+        }
+        return new LocationDto();
     }
 }

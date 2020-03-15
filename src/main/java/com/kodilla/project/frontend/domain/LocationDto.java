@@ -17,8 +17,8 @@ import lombok.Setter;
 public class LocationDto {
     @JsonProperty("id")
     private Long id;
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("label")
+    private String label;
     @JsonProperty("lattitude")
     private Double lattitude;
     @JsonProperty("longitude")
