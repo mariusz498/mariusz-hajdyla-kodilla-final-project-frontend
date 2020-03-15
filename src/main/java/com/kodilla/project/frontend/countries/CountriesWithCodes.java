@@ -10,13 +10,12 @@ import java.util.Map;
 
 @Component
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class CountriesWithCodes {
     private Map<String, String> countriesMap = new HashMap<>();
 
-    public CountriesWithCodes(Map<String, String> countriesMap) {
-        this.countriesMap = countriesMap;
-        countriesMap.put("", "Choose country");
+    public Map<String, String> fetchCodes() {
         countriesMap.put("AFG" , "Afghanistan");
         countriesMap.put("ALA" , "Åland Islands");
         countriesMap.put("ALB" , "Albania");
@@ -272,6 +271,6 @@ public class CountriesWithCodes {
             String oldKey = entry.getKey().toString();
             newMap.put(oldValue, oldKey);
         }
-        countriesMap = newMap;
+        return newMap;
     }
 }

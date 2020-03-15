@@ -56,10 +56,14 @@ public class CompanyLoggedView extends VerticalLayout {
         company = VaadinSession.getCurrent().getAttribute(Company.class);
         ordersList = VaadinSession.getCurrent().getAttribute(OrdersList.class);
         add(headerLayout());
-        add(buttonsLayout());
-        add(createOrderLayout());
-        add(ordersGrid());
+        Button createOrderButton = new Button("New order");
+        add(createOrderButton);
+        HorizontalLayout createOrderLayout = createOrderLayout();
+        createOrderLayout.setVisible(false);
+        add(createOrderLayout);
+        createOrderButton.addClickListener(e -> createOrderLayout.setVisible(true));
 
+        add(ordersGrid());
     }
 
     private HorizontalLayout headerLayout() {
@@ -77,9 +81,7 @@ public class CompanyLoggedView extends VerticalLayout {
 
     private HorizontalLayout buttonsLayout() {
         HorizontalLayout layout = new HorizontalLayout();
-        Button createOrderButton = new Button("New order");
-        createOrderButton.addClickListener(e -> createOrderLayout().setVisible(true));
-        layout.add(createOrderButton);
+
 /*        Button editOrderButton = new Button("Edit order");
         editOrderButton.addClickListener(e -> {
             ordersGrid().getSelectedItems();
@@ -90,7 +92,6 @@ public class CompanyLoggedView extends VerticalLayout {
 
     private HorizontalLayout createOrderLayout() {
         HorizontalLayout layout = new HorizontalLayout();
-        layout.setVisible(false);
         layout.add(originLocationLayout());
         layout.add(destinationLocationLayout());
         return layout;
@@ -98,12 +99,12 @@ public class CompanyLoggedView extends VerticalLayout {
 
     private VerticalLayout originLocationLayout() {
         VerticalLayout layout = new VerticalLayout();
-        Map<String, String> countriesCodes = new HashMap<>();
-        countriesCodes = new CountriesWithCodes(countriesCodes).getCountriesMap();
+        CountriesWithCodes newCodes = new CountriesWithCodes();
+        Map<String, String> countriesCodes = newCodes.fetchCodes();
         Set<String> countriesNames = new HashSet<>();
         for(Map.Entry<String, String> entry : countriesCodes.entrySet()) {
-            countriesNames.add(entry.getValue());
-        }
+            countriesNames.add(entry.getKey());
+    }
         ComboBox<String> countriesCombo = new ComboBox<>();
         countriesCombo.setLabel("Origin country");
         countriesCombo.setItems(countriesNames);
@@ -115,18 +116,17 @@ public class CompanyLoggedView extends VerticalLayout {
         foundLocation.setLabel("Found location:");
         foundLocation.setVisible(false);
         Button searchButton = new Button("Search");
-        Map<String, String> finalCountriesCodes = countriesCodes;
         searchButton.addClickListener(e -> {
-            if(cityField.isEmpty() || locationField.isEmpty() || countriesCombo.getValue().equals("Choose country")){
+            if(cityField.isEmpty() || locationField.isEmpty() || countriesCombo.getValue().isEmpty()){
                 Notification.show("Bad data. Check if country is chosen and city and address fields are not empty.");
             }
             else {
-                String countryCode = finalCountriesCodes.get(countriesCombo.getValue());
+                String countryCode = countriesCodes.get(countriesCombo.getValue());
                 String city = cityField.getValue();
                 String query = locationField.getValue();
                 Location location = locationMapper.mapToLocation(backendClient.fetchLocation(countryCode, city, query));
                 foundLocation.setVisible(true);
-                if(location.getLabel().isEmpty()) {
+                if(location == null) {
                     foundLocation.setValue("Location not found.");
                 }
                 else {
@@ -139,6 +139,7 @@ public class CompanyLoggedView extends VerticalLayout {
         layout.add(cityField);
         layout.add(locationField);
         layout.add(searchButton);
+        layout.add(foundLocation);
         return layout;
     }
 

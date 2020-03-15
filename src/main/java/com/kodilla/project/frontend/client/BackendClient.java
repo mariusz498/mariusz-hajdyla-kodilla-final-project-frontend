@@ -92,7 +92,7 @@ public class BackendClient {
 
     public LocationDto fetchLocation(String countryCode, String city, String query) {
         URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/location")
-                .queryParam("countryCode", countryCode)
+                .queryParam("code", countryCode)
                 .queryParam("city", city)
                 .queryParam("query", query)
                 .build().encode().toUri();

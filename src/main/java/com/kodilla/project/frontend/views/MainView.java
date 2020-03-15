@@ -2,10 +2,8 @@ package com.kodilla.project.frontend.views;
 
 import com.kodilla.project.frontend.client.Authenticator;
 import com.kodilla.project.frontend.client.BackendClient;
-import com.kodilla.project.frontend.domain.Company;
-import com.kodilla.project.frontend.domain.Driver;
-import com.kodilla.project.frontend.domain.Order;
-import com.kodilla.project.frontend.domain.OrdersList;
+import com.kodilla.project.frontend.countries.CountriesWithCodes;
+import com.kodilla.project.frontend.domain.*;
 import com.kodilla.project.frontend.mapper.CompanyMapper;
 import com.kodilla.project.frontend.mapper.DriverMapper;
 import com.kodilla.project.frontend.mapper.OrderMapper;
@@ -36,6 +34,9 @@ public class MainView extends VerticalLayout {
 
     @Autowired
     private Order order;
+
+    @Autowired
+    private CountriesWithCodes countriesWithCodes;
 
     @Autowired
     private OrdersList ordersList;
