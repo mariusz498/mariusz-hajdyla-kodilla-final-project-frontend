@@ -16,6 +16,7 @@ public class CountriesWithCodes {
 
     public CountriesWithCodes(Map<String, String> countriesMap) {
         this.countriesMap = countriesMap;
+        countriesMap.put("", "Choose country");
         countriesMap.put("AFG" , "Afghanistan");
         countriesMap.put("ALA" , "Åland Islands");
         countriesMap.put("ALB" , "Albania");
@@ -265,5 +266,12 @@ public class CountriesWithCodes {
         countriesMap.put("YEM" , "Yemen");
         countriesMap.put("ZMB" , "Zambia");
         countriesMap.put("ZWE" , "Zimbabwe");
+        Map<String, String> newMap = new HashMap<>();
+        for(Map.Entry entry : countriesMap.entrySet()) {
+            String oldValue = entry.getValue().toString();
+            String oldKey = entry.getKey().toString();
+            newMap.put(oldValue, oldKey);
+        }
+        countriesMap = newMap;
     }
 }

@@ -2,18 +2,18 @@ package com.kodilla.project.frontend.views;
 
 import com.kodilla.project.frontend.client.BackendClient;
 import com.kodilla.project.frontend.countries.CountriesWithCodes;
-import com.kodilla.project.frontend.domain.Company;
-import com.kodilla.project.frontend.domain.Location;
-import com.kodilla.project.frontend.domain.Order;
-import com.kodilla.project.frontend.domain.OrdersList;
+import com.kodilla.project.frontend.domain.*;
+import com.kodilla.project.frontend.mapper.LocationMapper;
 import com.kodilla.project.frontend.mapper.OrderMapper;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
@@ -47,6 +47,9 @@ public class CompanyLoggedView extends VerticalLayout {
 
     @Autowired
     private Location destination;
+
+    @Autowired
+    private LocationMapper locationMapper;
 
 
     public CompanyLoggedView() {
@@ -88,34 +91,100 @@ public class CompanyLoggedView extends VerticalLayout {
     private HorizontalLayout createOrderLayout() {
         HorizontalLayout layout = new HorizontalLayout();
         layout.setVisible(false);
-        layout.add(locationLayout("Origin"));
-        layout.add(locationLayout("Destination"));
+        layout.add(originLocationLayout());
+        layout.add(destinationLocationLayout());
         return layout;
     }
 
-    private VerticalLayout locationLayout(String locationType) {
+    private VerticalLayout originLocationLayout() {
         VerticalLayout layout = new VerticalLayout();
         Map<String, String> countriesCodes = new HashMap<>();
         countriesCodes = new CountriesWithCodes(countriesCodes).getCountriesMap();
-
         Set<String> countriesNames = new HashSet<>();
         for(Map.Entry<String, String> entry : countriesCodes.entrySet()) {
             countriesNames.add(entry.getValue());
         }
         ComboBox<String> countriesCombo = new ComboBox<>();
-        countriesCombo.setLabel(locationType + " country");
+        countriesCombo.setLabel("Origin country");
         countriesCombo.setItems(countriesNames);
         TextField cityField = new TextField();
-        cityField.setLabel(locationType + " city");
+        cityField.setLabel("Origin city");
         TextField locationField = new TextField();
-        locationField.setLabel(locationType + " address");
+        locationField.setLabel("Origin address");
+        TextArea foundLocation = new TextArea();
+        foundLocation.setLabel("Found location:");
+        foundLocation.setVisible(false);
         Button searchButton = new Button("Search");
-        //TODO send Location request and return Location
-        //searchButton.addClickListener(e -> )
+        Map<String, String> finalCountriesCodes = countriesCodes;
+        searchButton.addClickListener(e -> {
+            if(cityField.isEmpty() || locationField.isEmpty() || countriesCombo.getValue().equals("Choose country")){
+                Notification.show("Bad data. Check if country is chosen and city and address fields are not empty.");
+            }
+            else {
+                String countryCode = finalCountriesCodes.get(countriesCombo.getValue());
+                String city = cityField.getValue();
+                String query = locationField.getValue();
+                Location location = locationMapper.mapToLocation(backendClient.fetchLocation(countryCode, city, query));
+                foundLocation.setVisible(true);
+                if(location.getLabel().isEmpty()) {
+                    foundLocation.setValue("Location not found.");
+                }
+                else {
+                    foundLocation.setValue(location.getLabel());
+                    origin = location;
+                }
+            }
+        });
         layout.add(countriesCombo);
         layout.add(cityField);
         layout.add(locationField);
+        layout.add(searchButton);
+        return layout;
+    }
 
+    private VerticalLayout destinationLocationLayout() {
+        VerticalLayout layout = new VerticalLayout();
+        Map<String, String> countriesCodes = new HashMap<>();
+        countriesCodes = new CountriesWithCodes(countriesCodes).getCountriesMap();
+        Set<String> countriesNames = new HashSet<>();
+        for(Map.Entry<String, String> entry : countriesCodes.entrySet()) {
+            countriesNames.add(entry.getValue());
+        }
+        ComboBox<String> countriesCombo = new ComboBox<>();
+        countriesCombo.setLabel("Destination country");
+        countriesCombo.setItems(countriesNames);
+        TextField cityField = new TextField();
+        cityField.setLabel("Destination city");
+        TextField locationField = new TextField();
+        locationField.setLabel("Destination address");
+        TextArea foundLocation = new TextArea();
+        foundLocation.setLabel("Found location:");
+        foundLocation.setVisible(false);
+        Button searchButton = new Button("Search");
+        Map<String, String> finalCountriesCodes = countriesCodes;
+        searchButton.addClickListener(e -> {
+            if(cityField.isEmpty() || locationField.isEmpty() || countriesCombo.getValue().equals("Choose country")){
+                Notification.show("Bad data. Check if country is chosen and city and address fields are not empty.");
+            }
+            else {
+                String countryCode = finalCountriesCodes.get(countriesCombo.getValue());
+                String city = cityField.getValue();
+                String query = locationField.getValue();
+                Location location = locationMapper.mapToLocation(backendClient.fetchLocation(countryCode, city, query));
+                foundLocation.setVisible(true);
+                if(location.getLabel().isEmpty()) {
+                    foundLocation.setValue("Location not found.");
+                }
+                else {
+                    foundLocation.setValue(location.getLabel());
+                    destination = location;
+                }
+            }
+        });
+        layout.add(countriesCombo);
+        layout.add(cityField);
+        layout.add(locationField);
+        layout.add(searchButton);
         return layout;
     }
 
