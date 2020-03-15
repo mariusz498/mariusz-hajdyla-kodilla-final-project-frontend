@@ -15,17 +15,13 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 @Route(value = "company/main")
@@ -45,6 +41,12 @@ public class CompanyLoggedView extends VerticalLayout {
 
     @Autowired
     private OrdersList ordersList;
+
+    @Autowired
+    private Location origin;
+
+    @Autowired
+    private Location destination;
 
 
     public CompanyLoggedView() {
@@ -73,9 +75,13 @@ public class CompanyLoggedView extends VerticalLayout {
     private HorizontalLayout buttonsLayout() {
         HorizontalLayout layout = new HorizontalLayout();
         Button createOrderButton = new Button("New order");
-        //TODO: add listeners
-        Button editOrderButton = new Button("Edit order");
-        //TODO: add listeners
+        createOrderButton.addClickListener(e -> createOrderLayout().setVisible(true));
+        layout.add(createOrderButton);
+/*        Button editOrderButton = new Button("Edit order");
+        editOrderButton.addClickListener(e -> {
+            ordersGrid().getSelectedItems();
+        });
+        layout.add(editOrderButton);*/
         return layout;
     }
 
@@ -90,7 +96,7 @@ public class CompanyLoggedView extends VerticalLayout {
     private VerticalLayout locationLayout(String locationType) {
         VerticalLayout layout = new VerticalLayout();
         Map<String, String> countriesCodes = new HashMap<>();
-        CountriesWithCodes countries = new CountriesWithCodes(countriesCodes);
+        countriesCodes = new CountriesWithCodes(countriesCodes).getCountriesMap();
 
         Set<String> countriesNames = new HashSet<>();
         for(Map.Entry<String, String> entry : countriesCodes.entrySet()) {
@@ -103,9 +109,13 @@ public class CompanyLoggedView extends VerticalLayout {
         cityField.setLabel(locationType + " city");
         TextField locationField = new TextField();
         locationField.setLabel(locationType + " address");
+        Button searchButton = new Button("Search");
+        //TODO send Location request and return Location
+        //searchButton.addClickListener(e -> )
         layout.add(countriesCombo);
         layout.add(cityField);
         layout.add(locationField);
+
         return layout;
     }
 
@@ -115,6 +125,8 @@ public class CompanyLoggedView extends VerticalLayout {
         grid.setSizeFull();
         grid.setDetailsVisibleOnClick(true);
         grid.setHeight("500");
+        grid.setVerticalScrollingEnabled(true);
+        grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         if(ordersList.getOrdersList().isEmpty()) {
             add(new Text("You have no orders yet."));
             grid.setVisible(false);
