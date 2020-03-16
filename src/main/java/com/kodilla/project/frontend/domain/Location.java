@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class Location {
     private Long id;
     private String label;
-    private Double lattitude;
+    private Double latitude;
     private Double longitude;
     private List<Order> ordersFrom;
     private List<Order> ordersTo;

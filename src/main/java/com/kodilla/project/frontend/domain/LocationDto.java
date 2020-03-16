@@ -19,8 +19,8 @@ public class LocationDto {
     private Long id;
     @JsonProperty("label")
     private String label;
-    @JsonProperty("lattitude")
-    private Double lattitude;
+    @JsonProperty("latitude")
+    private Double latitude;
     @JsonProperty("longitude")
     private Double longitude;
     @JsonProperty("ordersFrom")
