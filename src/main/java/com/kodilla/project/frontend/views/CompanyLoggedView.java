@@ -48,6 +48,7 @@ public class CompanyLoggedView extends VerticalLayout {
 
     public CompanyLoggedView() {
         company = VaadinSession.getCurrent().getAttribute(Company.class);
+        final Company finalCompany = company;
         ordersList = VaadinSession.getCurrent().getAttribute(OrdersList.class);
         HeaderLayout headerLayout = new HeaderLayout(company);
         CreateOrderLayout createOrderLayout = new CreateOrderLayout();
@@ -57,6 +58,7 @@ public class CompanyLoggedView extends VerticalLayout {
         Button sendOrderRequestButton = new Button("Create order");
         sendOrderRequestButton.addClickListener(e -> {
                 List<Order> newList = ordersList.getOrdersList();
+                company = finalCompany;
                 newList.add(orderMapper.mapToOrder(backendClient.fetchOrderRequest(company, createOrderLayout)));
                 ordersList.setOrdersList(newList);
                 ordersGrid.setItems(ordersList.getOrdersList());
@@ -64,7 +66,8 @@ public class CompanyLoggedView extends VerticalLayout {
         add(headerLayout);
         add(createOrderButton);
         add(createOrderLayout);
-        add(sendOrderRequestButton);
+        createOrderLayout.add(sendOrderRequestButton);
+        createOrderLayout.setSizeFull();
         if(ordersList.getOrdersList().isEmpty()) {
             add(new Text("You have no orders yet"));
         }
