@@ -123,8 +123,7 @@ public class BackendClient {
             try {
                 HttpEntity httpEntity = jsonMapper.mapToJson(orderRequestDto);
                 OrderDto response = restTemplate.postForObject(url, httpEntity, OrderDto.class);
-                if (response.getCompany().equals(orderRequestDto.getCompany())
-                        && response.getOrigin().equals(orderRequestDto.getOrigin())
+                if (response.getOrigin().equals(orderRequestDto.getOrigin())
                         && response.getDestination().equals(orderRequestDto.getDestination())
                         && response.getCurrency().equals(orderRequestDto.getCurrency())) {
                    return response;

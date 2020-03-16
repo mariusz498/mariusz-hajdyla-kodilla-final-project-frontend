@@ -16,7 +16,7 @@ public class OrderMapper {
         Order order = new Order(
                 orderDto.getId(),
                 orderDto.getDescription(),
-                orderDto.getCompany(),
+                null,
                 orderDto.getOrigin(),
                 orderDto.getDestination(),
                 orderDto.getDriver(),
