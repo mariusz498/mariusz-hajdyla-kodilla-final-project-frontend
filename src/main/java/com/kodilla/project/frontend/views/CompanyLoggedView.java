@@ -8,6 +8,7 @@ import com.kodilla.project.frontend.mapper.OrderMapper;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
@@ -62,7 +63,6 @@ public class CompanyLoggedView extends VerticalLayout {
         createOrderLayout.setVisible(false);
         add(createOrderLayout);
         createOrderButton.addClickListener(e -> createOrderLayout.setVisible(true));
-
         add(ordersGrid());
     }
 
@@ -79,21 +79,11 @@ public class CompanyLoggedView extends VerticalLayout {
         return layout;
     }
 
-    private HorizontalLayout buttonsLayout() {
-        HorizontalLayout layout = new HorizontalLayout();
-
-/*        Button editOrderButton = new Button("Edit order");
-        editOrderButton.addClickListener(e -> {
-            ordersGrid().getSelectedItems();
-        });
-        layout.add(editOrderButton);*/
-        return layout;
-    }
-
     private HorizontalLayout createOrderLayout() {
         HorizontalLayout layout = new HorizontalLayout();
         layout.add(originLocationLayout());
         layout.add(destinationLocationLayout());
+        layout.add(orderOptions());
         return layout;
     }
 
@@ -188,6 +178,18 @@ public class CompanyLoggedView extends VerticalLayout {
         layout.add(searchButton);
         return layout;
     }
+
+    private VerticalLayout orderOptions() {
+        VerticalLayout layout = new VerticalLayout();
+        Checkbox express = new Checkbox("Express");
+        Checkbox ADR = new Checkbox("ADR");
+        Checkbox fragile = new Checkbox("Fragile");
+        layout.add(express, ADR, fragile);
+        return layout;
+    }
+
+    private ComboBox<String>
+    //TODO comboBoxes with options
 
     private Grid<Order> ordersGrid() {
         Grid<Order> grid = new Grid<>(Order.class);
