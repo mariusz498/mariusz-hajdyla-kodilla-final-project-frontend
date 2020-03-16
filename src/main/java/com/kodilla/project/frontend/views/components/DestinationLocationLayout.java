@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,15 +22,11 @@ import org.springframework.stereotype.Component;
 public class DestinationLocationLayout extends VerticalLayout{
 
     @Autowired
-    private LocationMapper locationMapper;
-
-    @Autowired
-    private BackendClient backendClient;
-
-    @Autowired
     private Location destination;
 
     public DestinationLocationLayout() {
+        LocationMapper locationMapper = new LocationMapper();
+        BackendClient backendClient = new BackendClient();
         CountriesWithCodes newCodes = new CountriesWithCodes();
         Map<String, String> countriesCodes = newCodes.fetchCodes();
         Set<String> countriesNames = new HashSet<>();

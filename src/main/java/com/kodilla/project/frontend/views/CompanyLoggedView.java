@@ -64,6 +64,7 @@ public class CompanyLoggedView extends VerticalLayout {
         add(headerLayout);
         add(createOrderButton);
         add(createOrderLayout);
+        add(sendOrderRequestButton);
         if(ordersList.getOrdersList().isEmpty()) {
             add(new Text("You have no orders yet"));
         }
@@ -89,6 +90,4 @@ public class CompanyLoggedView extends VerticalLayout {
         }
         return grid;
     }
-
-
 }

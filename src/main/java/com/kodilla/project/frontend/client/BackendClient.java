@@ -102,7 +102,6 @@ public class BackendClient {
                 .queryParam("city", city)
                 .queryParam("query", query)
                 .build().encode().toUri();
-        System.out.println("Location search URL: " + url);
             LocationDto response = restTemplate.getForObject(url, LocationDto.class);
             return response;
     }
@@ -124,6 +123,7 @@ public class BackendClient {
             try {
                 HttpEntity httpEntity = jsonMapper.mapToJson(orderRequestDto);
                 OrderDto response = restTemplate.postForObject(url, httpEntity, OrderDto.class);
+                System.out.println("OrderRequest URL: " + url);
                 if (response.getCompany().equals(orderRequestDto.getCompany())
                         && response.getOrigin().equals(orderRequestDto.getOrigin())
                         && response.getDestination().equals(orderRequestDto.getDestination())
