@@ -24,7 +24,7 @@ public class LocationDto {
     @JsonProperty("longitude")
     private Double longitude;
     @JsonProperty("ordersFrom")
-    private List<Order> ordersFrom;
+    private List<Long> ordersFrom;
     @JsonProperty("ordersTo")
-    private List<Order> ordersTo;
+    private List<Long> ordersTo;
 }

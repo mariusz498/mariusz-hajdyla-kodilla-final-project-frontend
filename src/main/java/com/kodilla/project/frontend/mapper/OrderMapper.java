@@ -17,16 +17,25 @@ public class OrderMapper {
     @Autowired
     private BackendClient backendClient;
 
+    @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private LocationMapper locationMapper;
+
+    @Autowired
+    private DriverMapper driverMapper;
+
+
 
     public Order mapToOrder(OrderDto orderDto) {
         Order order = new Order(
                 orderDto.getId(),
                 orderDto.getDescription(),
                 companyMapper.mapToCompany(backendClient.getCompanyByLogin(orderDto.getCompany())),
-                orderDto.getOrigin(),
-                orderDto.getDestination(),
-                null,
+                locationMapper.mapToLocation(backendClient.getLocationById(orderDto.getOrigin())),
+                locationMapper.mapToLocation(backendClient.getLocationById(orderDto.getDestination())),
+                driverMapper.mapToDriver(backendClient.getDriverByLogin(orderDto.getDriver())),
                 orderDto.getValue(),
                 orderDto.getCurrency(),
                 orderDto.getStatus());
