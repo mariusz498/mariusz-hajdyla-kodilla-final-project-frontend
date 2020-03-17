@@ -1,6 +1,5 @@
 package com.kodilla.project.frontend.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,5 +16,5 @@ public class Driver extends User {
     private Long id;
     private String login;
     private String passwordMD5;
-    private List<Order> orders;
+    private List<Long> orders;
 }

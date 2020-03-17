@@ -10,22 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class DriverMapper {
 
-    @Autowired
-    private BackendClient backendClient;
-
-    @Autowired
-    private OrderMapper orderMapper;
-
     public Driver mapToDriver(final DriverDto driverDto) {
-        List<Order> orders = new ArrayList<>();
-        for(Long id : driverDto.getOrders()) {
-            orders.add(orderMapper.mapToOrder(backendClient.getOrderById(id)));
-        }
         return new Driver(
                 driverDto.getId(),
                 driverDto.getLogin(),
                 driverDto.getPasswordMD5(),
-                orders);
+                driverDto.getOrders());
     }
     
 }

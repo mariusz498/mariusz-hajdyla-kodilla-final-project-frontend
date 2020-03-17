@@ -15,14 +15,6 @@ public class CompanyMapper {
     @Autowired
     private BackendClient backendClient;
 
-    @Autowired
-    private CompanyMapper companyMapper;
-
-    @Autowired
-    private LocationMapper locationMapper;
-
-    @Autowired
-    private DriverMapper driverMapper;
     public Company mapToCompany(final CompanyDto companyDto) {
         return new Company(
                 companyDto.getId(),

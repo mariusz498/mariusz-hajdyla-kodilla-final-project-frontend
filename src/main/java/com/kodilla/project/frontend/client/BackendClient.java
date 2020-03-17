@@ -66,8 +66,6 @@ public class BackendClient {
         RestTemplate restTemplate = new RestTemplate();
         URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/companies/" + id.toString()).build().encode().toUri();
         restTemplate.delete(url);
-        System.out.println(url);
-        //restTemplate.delete("http://localhost:8081/smart_shipping/companies/", id);
     }
 
     public DriverDto getDriverByLogin(String login) {
@@ -125,7 +123,7 @@ public class BackendClient {
         options.put("Express", express);
         options.put("Fragile", fragile);
         String currency = layout.getCurrencyCombo().getValue();
-        OrderRequestDto orderRequestDto = new OrderRequestDto(company, origin, destination, options, currency);
+        OrderRequestDto orderRequestDto = new OrderRequestDto(company.getLogin(), origin, destination, options, currency);
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8081/smart_shipping/orders";
             try {
@@ -144,14 +142,14 @@ public class BackendClient {
 
     public LocationDto getLocationById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/locations/id=" + id).build().encode().toUri();
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/locations/id=" + id.toString()).build().encode().toUri();
         LocationDto response = restTemplate.getForObject(url, LocationDto.class);
         return ofNullable(response).orElse(new LocationDto());
     }
 
     public OrderDto getOrderById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/orders/" + id).build().encode().toUri();
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/orders/" + id.toString()).build().encode().toUri();
         OrderDto response = restTemplate.getForObject(url, OrderDto.class);
         return ofNullable(response).orElse(new OrderDto());
     }

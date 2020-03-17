@@ -18,6 +18,6 @@ public class Location {
     private String label;
     private Double latitude;
     private Double longitude;
-    private List<Order> ordersFrom;
-    private List<Order> ordersTo;
+    private List<Long> ordersFrom;
+    private List<Long> ordersTo;
 }

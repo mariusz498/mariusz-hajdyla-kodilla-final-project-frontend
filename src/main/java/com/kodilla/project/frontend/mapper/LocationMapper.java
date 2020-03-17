@@ -13,47 +13,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocationMapper {
 
-    @Autowired
-    private BackendClient backendClient;
-
-    @Autowired
-    private OrderMapper orderMapper;
 
     public Location mapToLocation(LocationDto locationDto) {
-        List<Order> ordersFrom = new ArrayList<>();
-        for(Long id : locationDto.getOrdersFrom()) {
-            ordersFrom.add(orderMapper.mapToOrder(backendClient.getOrderById(id)));
-        }
-        List<Order> ordersTo = new ArrayList<>();
-        for(Long id : locationDto.getOrdersTo()) {
-            ordersTo.add(orderMapper.mapToOrder(backendClient.getOrderById(id)));
-        }
        Location location = new Location(
                locationDto.getId(),
                locationDto.getLabel(),
                locationDto.getLatitude(),
                locationDto.getLongitude(),
-               ordersFrom,
-               ordersTo);
+               locationDto.getOrdersFrom(),
+               locationDto.getOrdersTo());
        return location;
     }
     
     public LocationDto mapToLocationDto(Location location) {
-        List<Long> orders = new ArrayList<>();
-        for(Order order : location.getOrdersFrom()) {
-            orders.add(order.getId());
-        }
-        List<Long> ordersTo = new ArrayList<>();
-        for(Order order : location.getOrdersTo()) {
-            orders.add(order.getId());
-        }
         LocationDto locationDto = new LocationDto(
                 location.getId(),
                 location.getLabel(),
                 location.getLatitude(),
                 location.getLongitude(),
-                orders,
-                ordersTo);
+                location.getOrdersFrom(),
+                location.getOrdersTo());
         return locationDto;
     }
 }
