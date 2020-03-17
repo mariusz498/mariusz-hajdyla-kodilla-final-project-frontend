@@ -67,7 +67,6 @@ public class CompanyLoggedView extends VerticalLayout {
         add(createOrderButton);
         add(createOrderLayout);
         createOrderLayout.add(sendOrderRequestButton);
-        createOrderLayout.setSizeFull();
         if(ordersList.getOrdersList().isEmpty()) {
             add(new Text("You have no orders yet"));
         }

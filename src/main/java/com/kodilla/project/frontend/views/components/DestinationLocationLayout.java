@@ -34,12 +34,12 @@ public class DestinationLocationLayout extends VerticalLayout{
             countriesNames.add(entry.getKey());
         }
         ComboBox<String> countriesCombo = new ComboBox<>();
-        countriesCombo.setLabel("Origin country");
+        countriesCombo.setLabel("Destination country");
         countriesCombo.setItems(countriesNames);
         TextField cityField = new TextField();
-        cityField.setLabel("Origin city");
+        cityField.setLabel("Destination city");
         TextField locationField = new TextField();
-        locationField.setLabel("Origin address");
+        locationField.setLabel("Destination address");
         TextArea foundLocation = new TextArea();
         foundLocation.setLabel("Found location:");
         foundLocation.setVisible(false);
