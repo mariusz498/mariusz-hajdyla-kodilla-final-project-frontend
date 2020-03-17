@@ -2,6 +2,6 @@
 Frondend of final project for Kodilla course
 
 Last frontend commit:
-https://github.com/mariusz498/mariusz-hajdyla-kodilla-final-project-backend/commit/b6bfff587b0bd2505a062fd233bcaaf597e93439
+https://github.com/mariusz498/mariusz-hajdyla-kodilla-final-project-backend/commit/a0089c56ac3077213848ad067be6781d56230baa
 
 Project should run without any preparation.
