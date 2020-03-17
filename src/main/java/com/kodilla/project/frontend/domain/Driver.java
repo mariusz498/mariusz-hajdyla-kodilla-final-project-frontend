@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class Driver {
+public class Driver extends User {
     private Long id;
     private String login;
     private String passwordMD5;

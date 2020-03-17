@@ -62,6 +62,14 @@ public class BackendClient {
             return false;
     }
 
+    public void deleteCompany(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/companies/" + id.toString()).build().encode().toUri();
+        restTemplate.delete(url);
+        System.out.println(url);
+        //restTemplate.delete("http://localhost:8081/smart_shipping/companies/", id);
+    }
+
     public DriverDto getDriverByLogin(String login) {
         RestTemplate restTemplate = new RestTemplate();
         URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/drivers/login=" + login).build().encode().toUri();
