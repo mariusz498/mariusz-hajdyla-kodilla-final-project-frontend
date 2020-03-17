@@ -1,8 +1,10 @@
 package com.kodilla.project.frontend.mapper;
 
+import com.kodilla.project.frontend.client.BackendClient;
 import com.kodilla.project.frontend.domain.Order;
 import com.kodilla.project.frontend.domain.OrderDto;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,14 +14,19 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderMapper {
 
+    @Autowired
+    private BackendClient backendClient;
+
+    private CompanyMapper companyMapper;
+
     public Order mapToOrder(OrderDto orderDto) {
         Order order = new Order(
                 orderDto.getId(),
                 orderDto.getDescription(),
-                null,
+                companyMapper.mapToCompany(backendClient.getCompanyByLogin(orderDto.getCompany())),
                 orderDto.getOrigin(),
                 orderDto.getDestination(),
-                orderDto.getDriver(),
+                null,
                 orderDto.getValue(),
                 orderDto.getCurrency(),
                 orderDto.getStatus());

@@ -14,7 +14,7 @@ public class OrderDto {
     @JsonProperty("description")
     private String description;
     @JsonProperty("company")
-    private Company company;
+    private String company;
     @JsonProperty("origin")
     private Location origin;
     @JsonProperty("destination")
