@@ -62,6 +62,12 @@ public class BackendClient {
             return false;
     }
 
+    public void deleteCompany(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/companies/" + id.toString()).build().encode().toUri();
+        restTemplate.delete(url);
+    }
+
     public DriverDto getDriverByLogin(String login) {
         RestTemplate restTemplate = new RestTemplate();
         URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/drivers/login=" + login).build().encode().toUri();
@@ -117,7 +123,7 @@ public class BackendClient {
         options.put("Express", express);
         options.put("Fragile", fragile);
         String currency = layout.getCurrencyCombo().getValue();
-        OrderRequestDto orderRequestDto = new OrderRequestDto(company, origin, destination, options, currency);
+        OrderRequestDto orderRequestDto = new OrderRequestDto(company.getLogin(), origin, destination, options, currency);
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8081/smart_shipping/orders";
             try {
@@ -132,5 +138,19 @@ public class BackendClient {
                 System.out.println(e);
             }
             return new OrderDto();
+    }
+
+    public LocationDto getLocationById(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/locations/id=" + id.toString()).build().encode().toUri();
+        LocationDto response = restTemplate.getForObject(url, LocationDto.class);
+        return ofNullable(response).orElse(new LocationDto());
+    }
+
+    public OrderDto getOrderById(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/orders/" + id.toString()).build().encode().toUri();
+        OrderDto response = restTemplate.getForObject(url, OrderDto.class);
+        return ofNullable(response).orElse(new OrderDto());
     }
 }

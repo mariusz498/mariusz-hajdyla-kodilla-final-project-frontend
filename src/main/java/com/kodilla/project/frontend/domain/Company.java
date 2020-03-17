@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class Company {
+public class Company extends User{
         private Long id;
         private String login;
         private String passwordMD5;
