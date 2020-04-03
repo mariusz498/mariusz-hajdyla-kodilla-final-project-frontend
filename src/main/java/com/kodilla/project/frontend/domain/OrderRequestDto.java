@@ -12,7 +12,7 @@ import java.util.Map;
 @Getter
 @Component
 public class OrderRequestDto {
-    private Company company;
+    private String company;
     private LocationDto origin;
     private LocationDto destination;
     private Map<String, Boolean> options;

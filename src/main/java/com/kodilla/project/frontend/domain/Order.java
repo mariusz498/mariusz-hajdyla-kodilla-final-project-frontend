@@ -15,10 +15,10 @@ public class Order {
 
     private Long id;
     private String description;
-    private Company company;
-    private Location origin;
-    private Location destination;
-    private Driver driver;
+    private String company;
+    private String origin;
+    private String destination;
+    private String driver;
     private Double value;
     private String currency;
     private String status;

@@ -1,5 +1,6 @@
 package com.kodilla.project.frontend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderDto {
     @JsonProperty("id")
     private Long id;
@@ -16,11 +18,11 @@ public class OrderDto {
     @JsonProperty("company")
     private String company;
     @JsonProperty("origin")
-    private Location origin;
+    private Long origin;
     @JsonProperty("destination")
-    private Location destination;
+    private Long destination;
     @JsonProperty("driver")
-    private Driver driver;
+    private String driver;
     @JsonProperty("value")
     private Double value;
     @JsonProperty("currency")

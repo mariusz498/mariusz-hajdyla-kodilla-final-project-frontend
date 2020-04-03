@@ -13,7 +13,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationDto {
     @JsonProperty("id")
     private Long id;
@@ -24,7 +23,7 @@ public class LocationDto {
     @JsonProperty("longitude")
     private Double longitude;
     @JsonProperty("ordersFrom")
-    private List<Order> ordersFrom;
+    private List<Long> ordersFrom;
     @JsonProperty("ordersTo")
-    private List<Order> ordersTo;
+    private List<Long> ordersTo;
 }

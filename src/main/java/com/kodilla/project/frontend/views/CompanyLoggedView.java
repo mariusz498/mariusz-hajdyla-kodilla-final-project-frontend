@@ -57,11 +57,10 @@ public class CompanyLoggedView extends VerticalLayout {
         Grid<Order> ordersGrid = ordersGrid();
         Button sendOrderRequestButton = new Button("Create order");
         sendOrderRequestButton.addClickListener(e -> {
-                List<Order> newList = ordersList.getOrdersList();
                 company = finalCompany;
-                newList.add(orderMapper.mapToOrder(backendClient.fetchOrderRequest(company, createOrderLayout)));
-                ordersList.setOrdersList(newList);
-                ordersGrid.setItems(ordersList.getOrdersList());
+                backendClient.fetchOrderRequest(company, createOrderLayout);
+                List<Order> newList = orderMapper.mapToOrdersList(backendClient.getOrdersByCompany(company.getLogin()));
+                ordersGrid.setItems(newList);
                 });
         add(headerLayout);
         add(createOrderButton);
