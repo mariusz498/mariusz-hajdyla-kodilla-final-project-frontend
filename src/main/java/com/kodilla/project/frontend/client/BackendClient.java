@@ -51,9 +51,9 @@ public class BackendClient {
         RestTemplate restTemplate = new RestTemplate();
             String url = "http://localhost:8081/smart_shipping/companies";
             try {
-                HttpEntity httpEntity = jsonMapper.mapToJson(company);
+                HttpEntity<String> httpEntity = jsonMapper.mapToJson(company);
                 CompanyDto response = restTemplate.postForObject(url, httpEntity, CompanyDto.class);
-                if (response.getLogin().equals(company.getLogin()) && response.getPasswordMD5().equals(company.getPasswordMD5())) {
+                if (response != null && response.getLogin().equals(company.getLogin()) && response.getPasswordMD5().equals(company.getPasswordMD5())) {
                     return true;
                 }
             } catch (RestClientException e) {
@@ -79,9 +79,9 @@ public class BackendClient {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8081/smart_shipping/drivers";
         try {
-            HttpEntity httpEntity = jsonMapper.mapToJson(driver);
+            HttpEntity<String> httpEntity = jsonMapper.mapToJson(driver);
             DriverDto response = restTemplate.postForObject(url, httpEntity, DriverDto.class);
-            if (response.getLogin().equals(driver.getLogin()) && response.getPasswordMD5().equals(driver.getPasswordMD5())) {
+            if (response != null && response.getLogin().equals(driver.getLogin()) && response.getPasswordMD5().equals(driver.getPasswordMD5())) {
                 return true;
             }
         } catch (RestClientException e) {
@@ -108,8 +108,7 @@ public class BackendClient {
                 .queryParam("city", city)
                 .queryParam("query", query)
                 .build().encode().toUri();
-            LocationDto response = restTemplate.getForObject(url, LocationDto.class);
-            return response;
+            return restTemplate.getForObject(url, LocationDto.class);
     }
 
     public OrderDto fetchOrderRequest(Company company, CreateOrderLayout layout) {
@@ -127,10 +126,11 @@ public class BackendClient {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8081/smart_shipping/orders";
             try {
-                HttpEntity httpEntity = jsonMapper.mapToJson(orderRequestDto);
+                HttpEntity<String> httpEntity = jsonMapper.mapToJson(orderRequestDto);
                 OrderDto response = restTemplate.postForObject(url, httpEntity, OrderDto.class);
-                if (response.getOrigin().equals(orderRequestDto.getOrigin())
-                        && response.getDestination().equals(orderRequestDto.getDestination())
+                assert response != null;
+                if (response.getOrigin().equals(orderRequestDto.getOrigin().getId())
+                        && response.getDestination().equals(orderRequestDto.getDestination().getId())
                         && response.getCurrency().equals(orderRequestDto.getCurrency())) {
                    return response;
                 }

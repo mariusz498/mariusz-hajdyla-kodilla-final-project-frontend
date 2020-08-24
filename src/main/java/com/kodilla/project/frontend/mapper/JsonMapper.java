@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JsonMapper {
-    public HttpEntity mapToJson(Object object) throws JsonProcessingException {
+    public HttpEntity<String> mapToJson(Object object) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(object);
         HttpHeaders httpHeaders = new HttpHeaders();
