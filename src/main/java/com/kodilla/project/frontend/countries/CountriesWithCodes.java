@@ -13,7 +13,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Getter
 public class CountriesWithCodes {
-    private Map<String, String> countriesMap = new HashMap<>();
+    private final Map<String, String> countriesMap = new HashMap<>();
 
     public Map<String, String> fetchCodes() {
         countriesMap.put("AFG" , "Afghanistan");
@@ -266,9 +266,9 @@ public class CountriesWithCodes {
         countriesMap.put("ZMB" , "Zambia");
         countriesMap.put("ZWE" , "Zimbabwe");
         Map<String, String> newMap = new HashMap<>();
-        for(Map.Entry entry : countriesMap.entrySet()) {
-            String oldValue = entry.getValue().toString();
-            String oldKey = entry.getKey().toString();
+        for(Map.Entry<String, String> entry : countriesMap.entrySet()) {
+            String oldValue = entry.getValue();
+            String oldKey = entry.getKey();
             newMap.put(oldValue, oldKey);
         }
         return newMap;
