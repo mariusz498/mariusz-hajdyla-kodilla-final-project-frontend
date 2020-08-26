@@ -13,7 +13,6 @@ public class JsonMapper {
         String jsonString = mapper.writeValueAsString(object);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(HttpHeaders.CONTENT_TYPE, "application/json");
-        HttpEntity httpEntity = new HttpEntity(jsonString, httpHeaders);
-        return httpEntity;
+        return new HttpEntity<>(jsonString, httpHeaders);
     }
 }

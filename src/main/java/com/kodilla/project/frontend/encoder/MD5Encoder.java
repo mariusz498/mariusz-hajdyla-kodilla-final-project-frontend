@@ -9,11 +9,10 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class MD5Encoder {
 
-    public String encode(String testString) throws NoSuchAlgorithmException {
+    public String encode(String stringToEncode) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] messageDigest = md.digest(testString.getBytes());
+        byte[] messageDigest = md.digest(stringToEncode.getBytes());
         BigInteger number = new BigInteger(1, messageDigest);
-        String hashtext = number.toString(16);
-        return hashtext;
+        return number.toString(16);
     }
 }

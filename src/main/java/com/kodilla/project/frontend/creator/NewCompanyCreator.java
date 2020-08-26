@@ -3,7 +3,6 @@ package com.kodilla.project.frontend.creator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kodilla.project.frontend.client.BackendClient;
 import com.kodilla.project.frontend.domain.Company;
-import com.kodilla.project.frontend.domain.Order;
 import com.kodilla.project.frontend.encoder.MD5Encoder;
 import com.kodilla.project.frontend.views.MainView;
 import com.vaadin.flow.component.UI;

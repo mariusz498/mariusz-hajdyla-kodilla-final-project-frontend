@@ -30,7 +30,7 @@ public class OrderMapper {
 
 
     public Order mapToOrder(OrderDto orderDto) {
-        Order order = new Order(
+        return new Order(
                 orderDto.getId(),
                 orderDto.getDescription(),
                 orderDto.getCompany(),
@@ -40,7 +40,6 @@ public class OrderMapper {
                 orderDto.getValue(),
                 orderDto.getCurrency(),
                 orderDto.getStatus());
-        return order;
     }
 
     public List<Order> mapToOrdersList(List<OrderDto> orderDtos) {

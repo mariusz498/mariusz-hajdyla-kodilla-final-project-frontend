@@ -15,8 +15,10 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Route(value = "company/main")
+@Component
 public class CompanyLoggedView extends VerticalLayout {
 
     @Autowired
@@ -32,7 +34,7 @@ public class CompanyLoggedView extends VerticalLayout {
     private OrderMapper orderMapper;
 
     @Autowired
-    private OrdersList ordersList;
+    private final OrdersList ordersList;
 
     @Autowired
     private Location origin;
@@ -58,8 +60,8 @@ public class CompanyLoggedView extends VerticalLayout {
         Button sendOrderRequestButton = new Button("Create order");
         sendOrderRequestButton.addClickListener(e -> {
                 company = finalCompany;
-                backendClient.fetchOrderRequest(company, createOrderLayout);
                 List<Order> newList = orderMapper.mapToOrdersList(backendClient.getOrdersByCompany(company.getLogin()));
+                newList.add(orderMapper.mapToOrder(backendClient.fetchOrderRequest(company, createOrderLayout)));
                 ordersGrid.setItems(newList);
                 });
         add(headerLayout);
