@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class RegistrationPanel extends VerticalLayout {
 
     @Autowired
-    private UserCreator userCreator;
+    private final UserCreator userCreator;
 
     public VerticalLayout buildRegistrationLayout() {
         VerticalLayout layout = new VerticalLayout();
