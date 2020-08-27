@@ -19,8 +19,10 @@ import com.vaadin.flow.router.Route;
 import java.security.NoSuchAlgorithmException;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Route
+@Component
 public class MainView extends VerticalLayout {
 
     @Autowired
@@ -69,8 +71,7 @@ public class MainView extends VerticalLayout {
     }
 
     private Text headerText(){
-        Text header = new Text("Welcome to SmartShipping, a platform to automatic land transport management!");
-        return header;
+        return new Text("Welcome to SmartShipping, a platform to automatic land transport management!");
     }
 
     private VerticalLayout buildCompanyLoginLayout() {

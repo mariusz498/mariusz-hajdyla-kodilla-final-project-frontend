@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NewDriverCreator {
+public class NewDriverCreator implements UserCreator {
+
+    private final String userType = "driver";
 
     @Autowired
     private BackendClient backendClient;
@@ -21,7 +23,7 @@ public class NewDriverCreator {
     @Autowired
     MD5Encoder encoder;
 
-    public void createNewDriver(String login, String password) {
+    public void createNewUser(String login, String password) {
         if (backendClient.getDriverByLogin(login).getLogin() == null) {
             String passwordMd5 = null;
             try {
@@ -42,7 +44,7 @@ public class NewDriverCreator {
             }
         }
         else {
-            Notification.show("Driver name is unavailable. Please choose another name.");
+            Notification.show(userType.substring(0,1).toUpperCase() + userType.substring(1) + " name is unavailable. Please choose another name.");
         }
     }
 }
