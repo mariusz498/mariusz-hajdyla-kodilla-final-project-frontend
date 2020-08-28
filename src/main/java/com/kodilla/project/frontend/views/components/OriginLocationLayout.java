@@ -24,10 +24,16 @@ public class OriginLocationLayout extends VerticalLayout {
     @Autowired
     private Location origin;
 
+    @Autowired
+    private LocationMapper locationMapper;
+
+    @Autowired
+    private BackendClient backendClient;
+
+    @Autowired
+    private CountriesWithCodes newCodes;
+
     public OriginLocationLayout() {
-        LocationMapper locationMapper = new LocationMapper();
-        BackendClient backendClient = new BackendClient();
-        CountriesWithCodes newCodes = new CountriesWithCodes();
         Map<String, String> countriesCodes = newCodes.fetchCodes();
         Set<String> countriesNames = new HashSet<>();
         for(Map.Entry<String, String> entry : countriesCodes.entrySet()) {

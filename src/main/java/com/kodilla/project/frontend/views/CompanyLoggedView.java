@@ -1,9 +1,7 @@
 package com.kodilla.project.frontend.views;
 
 import com.kodilla.project.frontend.client.BackendClient;
-import com.kodilla.project.frontend.countries.CountriesWithCodes;
 import com.kodilla.project.frontend.domain.*;
-import com.kodilla.project.frontend.mapper.LocationMapper;
 import com.kodilla.project.frontend.mapper.OrderMapper;
 import com.kodilla.project.frontend.views.components.CreateOrderLayout;
 import com.kodilla.project.frontend.views.components.HeaderLayout;
@@ -28,32 +26,20 @@ public class CompanyLoggedView extends VerticalLayout {
     private BackendClient backendClient;
 
     @Autowired
-    private CountriesWithCodes countriesWithCodes;
-
-    @Autowired
     private OrderMapper orderMapper;
 
     @Autowired
     private final OrdersList ordersList;
 
     @Autowired
-    private Location origin;
+    private CreateOrderLayout createOrderLayout;
 
-    @Autowired
-    private Location destination;
-
-    @Autowired
-    private LocationMapper locationMapper;
-
-    @Autowired
-    private OrderRequestDto orderRequest;
 
     public CompanyLoggedView() {
         company = VaadinSession.getCurrent().getAttribute(Company.class);
         final Company finalCompany = company;
         ordersList = VaadinSession.getCurrent().getAttribute(OrdersList.class);
         HeaderLayout headerLayout = new HeaderLayout(company);
-        CreateOrderLayout createOrderLayout = new CreateOrderLayout();
         Button createOrderButton = new Button("New order");
         createOrderButton.addClickListener(e -> createOrderLayout.setVisible(true));
         Grid<Order> ordersGrid = ordersGrid();

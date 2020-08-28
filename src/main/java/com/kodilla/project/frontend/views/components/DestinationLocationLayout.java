@@ -24,10 +24,16 @@ public class DestinationLocationLayout extends VerticalLayout{
     @Autowired
     private Location destination;
 
+    @Autowired
+    private LocationMapper locationMapper;
+
+    @Autowired
+    private BackendClient backendClient;
+
+    @Autowired
+    private CountriesWithCodes newCodes;
+
     public DestinationLocationLayout() {
-        LocationMapper locationMapper = new LocationMapper();
-        BackendClient backendClient = new BackendClient();
-        CountriesWithCodes newCodes = new CountriesWithCodes();
         Map<String, String> countriesCodes = newCodes.fetchCodes();
         Set<String> countriesNames = new HashSet<>();
         for(Map.Entry<String, String> entry : countriesCodes.entrySet()) {
@@ -41,7 +47,7 @@ public class DestinationLocationLayout extends VerticalLayout{
         TextField locationField = new TextField();
         locationField.setLabel("Destination address");
         TextArea foundLocation = new TextArea();
-        foundLocation.setLabel("Found location:");
+        foundLocation.setLabel("Found location: ");
         foundLocation.setVisible(false);
         Button searchButton = new Button("Search");
         searchButton.addClickListener(e -> {
