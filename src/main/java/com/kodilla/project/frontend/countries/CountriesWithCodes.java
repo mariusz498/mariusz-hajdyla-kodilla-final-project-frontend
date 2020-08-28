@@ -1,6 +1,5 @@
 package com.kodilla.project.frontend.countries;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -10,7 +9,6 @@ import java.util.Map;
 
 @Component
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class CountriesWithCodes {
     private final Map<String, String> countriesMap = new HashMap<>();
