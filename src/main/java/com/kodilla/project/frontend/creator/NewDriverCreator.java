@@ -9,10 +9,13 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Getter
 public class NewDriverCreator implements UserCreator {
 
     private final String userType = "driver";
