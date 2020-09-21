@@ -10,22 +10,22 @@ import org.springframework.stereotype.Component;
 public class CreateOrderLayout extends HorizontalLayout {
 
     @Autowired
-    private final OriginLocationLayout originLocationLayout = new OriginLocationLayout();
+    OriginLocationLayout originLocationLayout;
 
     @Autowired
-    private final DestinationLocationLayout destinationLocationLayout = new DestinationLocationLayout();
+    DestinationLocationLayout destinationLocationLayout;
 
     @Autowired
-    private final OrderOptions orderOptions = new OrderOptions();
+    OrderOptions orderOptions;
 
     @Autowired
-    private final CurrencyCombo currencyCombo = new CurrencyCombo();
+    CurrencyCombo currencyCombo;
 
     public CreateOrderLayout() {
         setVisible(false);
-        add(originLocationLayout);
-        add(destinationLocationLayout);
-        add(orderOptions);
-        add(currencyCombo);
+        //add(originLocationLayout);
+        //add(destinationLocationLayout);
+        //add(orderOptions);
+        //add(currencyCombo);
     }
 }

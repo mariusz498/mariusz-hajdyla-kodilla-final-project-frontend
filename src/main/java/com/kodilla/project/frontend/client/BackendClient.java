@@ -21,13 +21,13 @@ import static java.util.Optional.ofNullable;
 public class BackendClient {
 
     @Autowired
-    private JsonMapper jsonMapper;
+    JsonMapper jsonMapper;
 
     @Autowired
-    private OrderMapper orderMapper;
+    OrderMapper orderMapper;
 
     @Autowired
-    private LocationMapper locationMapper;
+    LocationMapper locationMapper;
 
     public List<CompanyDto> getCompanies() {
         RestTemplate restTemplate = new RestTemplate();

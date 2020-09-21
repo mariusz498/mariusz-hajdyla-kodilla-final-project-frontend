@@ -20,47 +20,48 @@ import org.springframework.stereotype.Component;
 public class CompanyLoggedView extends VerticalLayout {
 
     @Autowired
-    private Company company;
+    Company company;
 
     @Autowired
-    private BackendClient backendClient;
+    BackendClient backendClient;
 
     @Autowired
-    private OrderMapper orderMapper;
+    OrderMapper orderMapper;
 
     @Autowired
-    private final OrdersList ordersList;
+    OrdersList ordersList;
 
     @Autowired
-    private CreateOrderLayout createOrderLayout;
+    CreateOrderLayout createOrderLayout;
 
 
     public CompanyLoggedView() {
-        company = VaadinSession.getCurrent().getAttribute(Company.class);
-        final Company finalCompany = company;
-        ordersList = VaadinSession.getCurrent().getAttribute(OrdersList.class);
-        HeaderLayout headerLayout = new HeaderLayout(company);
-        Button createOrderButton = new Button("New order");
-        createOrderButton.addClickListener(e -> createOrderLayout.setVisible(true));
-        Grid<Order> ordersGrid = ordersGrid();
-        Button sendOrderRequestButton = new Button("Create order");
-        sendOrderRequestButton.addClickListener(e -> {
+        if (VaadinSession.getCurrent() != null) {
+            company = VaadinSession.getCurrent().getAttribute(Company.class);
+            ordersList = VaadinSession.getCurrent().getAttribute(OrdersList.class);
+            final Company finalCompany = company;
+            HeaderLayout headerLayout = new HeaderLayout(company);
+            Button createOrderButton = new Button("New order");
+            createOrderButton.addClickListener(e -> createOrderLayout.setVisible(true));
+            Grid<Order> ordersGrid = ordersGrid();
+            Button sendOrderRequestButton = new Button("Create order");
+            sendOrderRequestButton.addClickListener(e -> {
                 company = finalCompany;
                 List<Order> newList = orderMapper.mapToOrdersList(backendClient.getOrdersByCompany(company.getLogin()));
                 newList.add(orderMapper.mapToOrder(backendClient.fetchOrderRequest(company, createOrderLayout)));
                 ordersGrid.setItems(newList);
-                });
-        add(headerLayout);
-        add(createOrderButton);
-        add(createOrderLayout);
-        createOrderLayout.add(sendOrderRequestButton);
-        if(ordersList.getOrdersList().isEmpty()) {
-            add(new Text("You have no orders yet"));
+            });
+            add(headerLayout);
+            add(createOrderButton);
+            add(createOrderLayout);
+            createOrderLayout.add(sendOrderRequestButton);
+            if (ordersList.getOrdersList().isEmpty()) {
+                add(new Text("You have no orders yet"));
+            } else {
+                add(new Text("Your orders: "));
+            }
+            add(ordersGrid);
         }
-        else {
-            add(new Text("Your orders: "));
-        }
-        add(ordersGrid);
     }
 
     private Grid<Order> ordersGrid() {

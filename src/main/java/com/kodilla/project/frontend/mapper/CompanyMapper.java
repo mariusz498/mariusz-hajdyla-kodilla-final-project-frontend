@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 public class CompanyMapper {
 
     @Autowired
-    private OrderMapper orderMapper;
+    OrderMapper orderMapper;
 
     @Autowired
-    private BackendClient backendClient;
+    BackendClient backendClient;
 
     public Company mapToCompany(final CompanyDto companyDto) {
         return new Company(

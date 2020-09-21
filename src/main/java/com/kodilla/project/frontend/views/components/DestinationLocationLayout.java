@@ -22,19 +22,20 @@ import org.springframework.stereotype.Component;
 public class DestinationLocationLayout extends VerticalLayout{
 
     @Autowired
-    private Location destination;
+    Location destination;
 
     @Autowired
-    private LocationMapper locationMapper;
+    LocationMapper locationMapper;
 
     @Autowired
-    private BackendClient backendClient;
+    BackendClient backendClient;
 
-    @Autowired
-    private CountriesWithCodes newCodes;
+    //@Autowired
+    //CountriesWithCodes countriesWithCodes;
 
     public DestinationLocationLayout() {
-        Map<String, String> countriesCodes = newCodes.fetchCodes();
+        CountriesWithCodes countriesWithCodes = new CountriesWithCodes();
+        Map<String, String> countriesCodes = countriesWithCodes.getCountriesMap();
         Set<String> countriesNames = new HashSet<>();
         for(Map.Entry<String, String> entry : countriesCodes.entrySet()) {
             countriesNames.add(entry.getKey());

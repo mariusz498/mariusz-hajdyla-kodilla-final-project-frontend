@@ -16,16 +16,16 @@ import java.util.List;
 public class OrderMapper {
 
     @Autowired
-    private BackendClient backendClient;
+    BackendClient backendClient;
 
     @Autowired
-    private CompanyMapper companyMapper;
+    CompanyMapper companyMapper;
 
     @Autowired
-    private LocationMapper locationMapper;
+    LocationMapper locationMapper;
 
     @Autowired
-    private DriverMapper driverMapper;
+    DriverMapper driverMapper;
 
 
 
