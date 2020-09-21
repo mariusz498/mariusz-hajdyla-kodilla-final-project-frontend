@@ -26,34 +26,34 @@ import org.springframework.stereotype.Component;
 public class MainView extends VerticalLayout {
 
     @Autowired
-    private Authenticator authenticator;
+    Authenticator authenticator;
 
     @Autowired
-    private Company company;
+    Company company;
 
     @Autowired
-    private Driver driver;
+    Driver driver;
 
     @Autowired
-    private Order order;
+    Order order;
 
     @Autowired
-    private CountriesWithCodes countriesWithCodes;
+    CountriesWithCodes countriesWithCodes;
 
     @Autowired
-    private OrdersList ordersList;
+    OrdersList ordersList;
 
     @Autowired
-    private CompanyMapper companyMapper;
+    CompanyMapper companyMapper;
 
     @Autowired
-    private DriverMapper driverMapper;
+    DriverMapper driverMapper;
 
     @Autowired
-    private OrderMapper orderMapper;
+    OrderMapper orderMapper;
 
     @Autowired
-    private BackendClient backendClient;
+    BackendClient backendClient;
 
 
     public MainView() {

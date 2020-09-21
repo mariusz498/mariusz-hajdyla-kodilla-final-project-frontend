@@ -21,7 +21,7 @@ public class NewCompanyCreator implements UserCreator {
     private final String userType = "company";
 
     @Autowired
-    private BackendClient backendClient;
+    BackendClient backendClient;
 
     @Autowired
     MD5Encoder encoder;

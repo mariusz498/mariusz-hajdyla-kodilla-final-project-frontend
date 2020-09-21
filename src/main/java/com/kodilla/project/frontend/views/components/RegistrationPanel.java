@@ -6,19 +6,14 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
+@NoArgsConstructor
 public class RegistrationPanel extends VerticalLayout {
 
-    @Autowired
-    private final UserCreator userCreator;
-
-    public VerticalLayout buildRegistrationLayout() {
-        VerticalLayout layout = new VerticalLayout();
+    public RegistrationPanel(UserCreator userCreator) {
         TextField loginField = new TextField();
         loginField.setLabel("New " + userCreator.getUserType() + " login");
         loginField.setPlaceholder("Type login here");
@@ -35,9 +30,8 @@ public class RegistrationPanel extends VerticalLayout {
                 userCreator.createNewUser(loginField.getValue(), passwordField.getValue());
             }
         });
-        layout.add(loginField);
-        layout.add(passwordField);
-        layout.add(registerButton);
-        return layout;
+        this.add(loginField);
+        this.add(passwordField);
+        this.add(registerButton);
     }
 }

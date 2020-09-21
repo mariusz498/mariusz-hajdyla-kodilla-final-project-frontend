@@ -1,19 +1,16 @@
 package com.kodilla.project.frontend.countries;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@NoArgsConstructor
 @Getter
 public class CountriesWithCodes {
-    private final Map<String, String> countriesMap = new HashMap<>();
+    private Map<String, String> countriesMap = new HashMap<>();
 
-    public Map<String, String> fetchCodes() {
+    public CountriesWithCodes() {
         countriesMap.put("AFG" , "Afghanistan");
         countriesMap.put("ALA" , "Åland Islands");
         countriesMap.put("ALB" , "Albania");
@@ -269,6 +266,6 @@ public class CountriesWithCodes {
             String oldKey = entry.getKey();
             newMap.put(oldValue, oldKey);
         }
-        return newMap;
+        countriesMap = newMap;
     }
 }

@@ -21,7 +21,7 @@ public class NewDriverCreator implements UserCreator {
     private final String userType = "driver";
 
     @Autowired
-    private BackendClient backendClient;
+    BackendClient backendClient;
 
     @Autowired
     MD5Encoder encoder;

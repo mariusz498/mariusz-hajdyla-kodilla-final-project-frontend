@@ -11,15 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegisterDriverView extends VerticalLayout {
 
-    @Autowired
-    private NewDriverCreator driverCreator;
-
     public RegisterDriverView() {
-        add(buildDriverRegisterLayout());
-    }
-
-    private VerticalLayout buildDriverRegisterLayout() {
-        RegistrationPanel panel = new RegistrationPanel(driverCreator);
-        return panel.buildRegistrationLayout();
+        add(new RegistrationPanel(new NewDriverCreator()));
     }
 }

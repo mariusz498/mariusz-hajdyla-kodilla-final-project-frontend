@@ -1,9 +1,7 @@
 package com.kodilla.project.frontend.views;
 
 import com.kodilla.project.frontend.client.BackendClient;
-import com.kodilla.project.frontend.countries.CountriesWithCodes;
 import com.kodilla.project.frontend.domain.*;
-import com.kodilla.project.frontend.mapper.LocationMapper;
 import com.kodilla.project.frontend.mapper.OrderMapper;
 import com.kodilla.project.frontend.views.components.CreateOrderLayout;
 import com.kodilla.project.frontend.views.components.HeaderLayout;
@@ -22,59 +20,48 @@ import org.springframework.stereotype.Component;
 public class CompanyLoggedView extends VerticalLayout {
 
     @Autowired
-    private Company company;
+    Company company;
 
     @Autowired
-    private BackendClient backendClient;
+    BackendClient backendClient;
 
     @Autowired
-    private CountriesWithCodes countriesWithCodes;
+    OrderMapper orderMapper;
 
     @Autowired
-    private OrderMapper orderMapper;
+    OrdersList ordersList;
 
     @Autowired
-    private final OrdersList ordersList;
+    CreateOrderLayout createOrderLayout;
 
-    @Autowired
-    private Location origin;
-
-    @Autowired
-    private Location destination;
-
-    @Autowired
-    private LocationMapper locationMapper;
-
-    @Autowired
-    private OrderRequestDto orderRequest;
 
     public CompanyLoggedView() {
-        company = VaadinSession.getCurrent().getAttribute(Company.class);
-        final Company finalCompany = company;
-        ordersList = VaadinSession.getCurrent().getAttribute(OrdersList.class);
-        HeaderLayout headerLayout = new HeaderLayout(company);
-        CreateOrderLayout createOrderLayout = new CreateOrderLayout();
-        Button createOrderButton = new Button("New order");
-        createOrderButton.addClickListener(e -> createOrderLayout.setVisible(true));
-        Grid<Order> ordersGrid = ordersGrid();
-        Button sendOrderRequestButton = new Button("Create order");
-        sendOrderRequestButton.addClickListener(e -> {
+        if (VaadinSession.getCurrent() != null) {
+            company = VaadinSession.getCurrent().getAttribute(Company.class);
+            ordersList = VaadinSession.getCurrent().getAttribute(OrdersList.class);
+            final Company finalCompany = company;
+            HeaderLayout headerLayout = new HeaderLayout(company);
+            Button createOrderButton = new Button("New order");
+            createOrderButton.addClickListener(e -> createOrderLayout.setVisible(true));
+            Grid<Order> ordersGrid = ordersGrid();
+            Button sendOrderRequestButton = new Button("Create order");
+            sendOrderRequestButton.addClickListener(e -> {
                 company = finalCompany;
                 List<Order> newList = orderMapper.mapToOrdersList(backendClient.getOrdersByCompany(company.getLogin()));
                 newList.add(orderMapper.mapToOrder(backendClient.fetchOrderRequest(company, createOrderLayout)));
                 ordersGrid.setItems(newList);
-                });
-        add(headerLayout);
-        add(createOrderButton);
-        add(createOrderLayout);
-        createOrderLayout.add(sendOrderRequestButton);
-        if(ordersList.getOrdersList().isEmpty()) {
-            add(new Text("You have no orders yet"));
+            });
+            add(headerLayout);
+            add(createOrderButton);
+            add(createOrderLayout);
+            createOrderLayout.add(sendOrderRequestButton);
+            if (ordersList.getOrdersList().isEmpty()) {
+                add(new Text("You have no orders yet"));
+            } else {
+                add(new Text("Your orders: "));
+            }
+            add(ordersGrid);
         }
-        else {
-            add(new Text("Your orders: "));
-        }
-        add(ordersGrid);
     }
 
     private Grid<Order> ordersGrid() {

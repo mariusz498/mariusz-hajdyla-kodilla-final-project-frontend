@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 public class Authenticator {
 
     @Autowired
-    private MD5Encoder encoder;
+    MD5Encoder encoder;
 
     @Autowired
-    private BackendClient backendClient;
+    BackendClient backendClient;
 
     public boolean authenticateDriver(String login, String password) throws NoSuchAlgorithmException {
         String driverLogin = backendClient.getDriverByLogin(login).getLogin();
