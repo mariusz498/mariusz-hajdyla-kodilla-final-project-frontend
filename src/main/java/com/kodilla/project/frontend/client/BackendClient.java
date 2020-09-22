@@ -101,9 +101,10 @@ public class BackendClient {
         }
     }
 
-    public LocationDto fetchLocation(String countryCode, String city, String query) {
+    public LocationDto fetchLocation(String countyName, String countryCode, String city, String query) {
         RestTemplate restTemplate = new RestTemplate();
         URI url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/smart_shipping/location")
+                .queryParam("country", countyName)
                 .queryParam("code", countryCode)
                 .queryParam("city", city)
                 .queryParam("query", query)

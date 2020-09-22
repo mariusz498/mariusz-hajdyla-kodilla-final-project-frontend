@@ -23,9 +23,9 @@ public class CreateOrderLayout extends HorizontalLayout {
 
     public CreateOrderLayout() {
         setVisible(false);
-        //add(originLocationLayout);
-        //add(destinationLocationLayout);
-        //add(orderOptions);
-        //add(currencyCombo);
+        add(originLocationLayout);
+        add(destinationLocationLayout);
+        add(orderOptions);
+        add(currencyCombo);
     }
 }

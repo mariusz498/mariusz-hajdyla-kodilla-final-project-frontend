@@ -17,11 +17,12 @@ import org.springframework.test.context.junit4.SpringRunner;
         @Test
         public void fetchLocationTest() {
             //Given
+            String countryName = "Polska";
             String countryCode = "POL";
             String city = "Kraków";
             String query = "Myśliwska 40A";
             //When
-            LocationDto locationDto = backendClient.fetchLocation(countryCode, city, query);
+            LocationDto locationDto = backendClient.fetchLocation(countryName, countryCode, city, query);
             System.out.println(locationDto.getLabel());
         }
     }

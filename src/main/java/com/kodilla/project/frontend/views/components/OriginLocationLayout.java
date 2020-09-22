@@ -30,9 +30,6 @@ public class OriginLocationLayout extends VerticalLayout {
     @Autowired
     BackendClient backendClient;
 
-    //@Autowired
-    //CountriesWithCodes countriesWithCodes;
-
     public OriginLocationLayout() {
         CountriesWithCodes countriesWithCodes = new CountriesWithCodes();
         Map<String, String> countriesCodes = countriesWithCodes.getCountriesMap();
@@ -56,10 +53,11 @@ public class OriginLocationLayout extends VerticalLayout {
                 Notification.show("Incomplete data. Check if country is chosen and city and address fields are not empty.");
             }
             else {
+                String countryName = countriesCombo.getValue();
                 String countryCode = countriesCodes.get(countriesCombo.getValue());
                 String city = cityField.getValue();
                 String query = locationField.getValue();
-                Location location = locationMapper.mapToLocation(backendClient.fetchLocation(countryCode, city, query));
+                Location location = locationMapper.mapToLocation(backendClient.fetchLocation(countryName, countryCode, city, query));
                 foundLocation.setVisible(true);
                 if(location == null) {
                     foundLocation.setValue("Location not found.");
